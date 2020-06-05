@@ -15,11 +15,12 @@ defmodule WeChat.SDK.UserBlacklist do
   ## API Docs
     [link](#{@doc_link}#1){:target="_blank"}
   """
-  @spec get_black_list(SDK.client) :: SDK.response
+  @spec get_black_list(SDK.client()) :: SDK.response()
   def get_black_list(client) do
     client.request(:post, url: "/cgi-bin/tags/members/getblacklist")
   end
-  @spec get_black_list(SDK.client, SDK.openid) :: SDK.response
+
+  @spec get_black_list(SDK.client(), SDK.openid()) :: SDK.response()
   def get_black_list(client, begin_openid) do
     client.request(
       :post,
@@ -34,7 +35,7 @@ defmodule WeChat.SDK.UserBlacklist do
   ## API Docs
     [link](#{@doc_link}#2){:target="_blank"}
   """
-  @spec batch_blacklist(SDK.client, [SDK.openid]) :: SDK.response
+  @spec batch_blacklist(SDK.client(), [SDK.openid()]) :: SDK.response()
   def batch_blacklist(client, openid_list) do
     client.request(
       :post,
@@ -49,7 +50,7 @@ defmodule WeChat.SDK.UserBlacklist do
   ## API Docs
     [link](#{@doc_link}#3){:target="_blank"}
   """
-  @spec batch_unblacklist(SDK.client, [SDK.openid]) :: SDK.response
+  @spec batch_unblacklist(SDK.client(), [SDK.openid()]) :: SDK.response()
   def batch_unblacklist(client, openid_list) do
     client.request(
       :post,

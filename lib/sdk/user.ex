@@ -9,7 +9,7 @@ defmodule WeChat.SDK.User do
   ## API Docs
     [link](https://developers.weixin.qq.com/doc/offiaccount/User_Management/Configuring_user_notes.html){:target="_blank"}
   """
-  @spec update_remark(SDK.client, SDK.openid, remark :: String.t) :: SDK.response
+  @spec update_remark(SDK.client(), SDK.openid(), remark :: String.t()) :: SDK.response()
   def update_remark(client, openid, remark) do
     client.request(
       :post,
@@ -24,7 +24,7 @@ defmodule WeChat.SDK.User do
   ## API Docs
     [link](https://developers.weixin.qq.com/doc/offiaccount/User_Management/Get_users_basic_information_UnionID.html#UinonId){:target="_blank"}
   """
-  @spec user_info(SDK.client, SDK.openid) :: SDK.response
+  @spec user_info(SDK.client(), SDK.openid()) :: SDK.response()
   def user_info(client, openid) do
     client.request(
       :get,
@@ -43,7 +43,7 @@ defmodule WeChat.SDK.User do
   ## API Docs
     [link](https://developers.weixin.qq.com/doc/offiaccount/OA_Web_Apps/Wechat_webpage_authorization.html#3){:target="_blank"}
   """
-  @spec sns_user_info(SDK.client, SDK.openid, access_token :: String.t) :: SDK.response
+  @spec sns_user_info(SDK.client(), SDK.openid(), access_token :: String.t()) :: SDK.response()
   def sns_user_info(client, openid, access_token) do
     client.request(
       :get,
@@ -61,11 +61,12 @@ defmodule WeChat.SDK.User do
   ## API Docs
     [link](https://developers.weixin.qq.com/doc/offiaccount/User_Management/Getting_a_User_List.html){:target="_blank"}
   """
-  @spec get_users(SDK.client) :: SDK.response
+  @spec get_users(SDK.client()) :: SDK.response()
   def get_users(client) do
     client.request(:get, url: "/user/get")
   end
-  @spec get_users(SDK.client, SDK.openid) :: SDK.response
+
+  @spec get_users(SDK.client(), SDK.openid()) :: SDK.response()
   def get_users(client, next_openid) do
     client.request(
       :get,

@@ -38,15 +38,24 @@ defmodule WeChat.SDK.MixProject do
         {
           "SDK APIs",
           [
-            WeChat.SDK.Message,         # 消息管理
-            WeChat.SDK.CustomService,   # 消息管理 - 客服帐号管理
-            WeChat.SDK.Material,        # 素材管理
-            WeChat.SDK.Comment,         # 图文消息留言管理
-            WeChat.SDK.User,            # 用户管理
-            WeChat.SDK.UserTag,         # 用户管理 - 标签管理
-            WeChat.SDK.UserBlacklist,   # 用户管理 - 黑名单管理
-            WeChat.SDK.Account,         # 账号管理
-            WeChat.SDK.Card,            # 微信卡券(WIP)
+            # 消息管理
+            WeChat.SDK.Message,
+            # 消息管理 - 客服帐号管理
+            WeChat.SDK.CustomService,
+            # 素材管理
+            WeChat.SDK.Material,
+            # 图文消息留言管理
+            WeChat.SDK.Comment,
+            # 用户管理
+            WeChat.SDK.User,
+            # 用户管理 - 标签管理
+            WeChat.SDK.UserTag,
+            # 用户管理 - 黑名单管理
+            WeChat.SDK.UserBlacklist,
+            # 账号管理
+            WeChat.SDK.Account,
+            # 微信卡券(WIP)
+            WeChat.SDK.Card
           ]
         },
         {"Structure", [WeChat.SDK.Article]}

@@ -16,7 +16,7 @@ defmodule WeChat.SDK.Comment do
     * 2 - 精选评论
   """
   @type comment_type :: integer
-  @type content :: String.t
+  @type content :: String.t()
 
   @doc_link "https://developers.weixin.qq.com/doc/offiaccount/Comments_management/Image_Comments_Management_Interface.html"
 
@@ -26,7 +26,7 @@ defmodule WeChat.SDK.Comment do
   ## API Docs
     [link](#{@doc_link}){:target="_blank"}
   """
-  @spec open(SDK.client, msg_data_id, index :: integer) :: SDK.response
+  @spec open(SDK.client(), msg_data_id, index :: integer) :: SDK.response()
   def open(client, msg_data_id, index \\ 0) do
     client.request(
       :post,
@@ -41,7 +41,7 @@ defmodule WeChat.SDK.Comment do
   ## API Docs
     [link](#{@doc_link}){:target="_blank"}
   """
-  @spec close(SDK.client, msg_data_id, index :: integer) :: SDK.response
+  @spec close(SDK.client(), msg_data_id, index :: integer) :: SDK.response()
   def close(client, msg_data_id, index \\ 0) do
     client.request(
       :post,
@@ -66,24 +66,26 @@ defmodule WeChat.SDK.Comment do
   | type | 是 | Uint32 | type=0 普通评论&精选评论 type=1 普通评论 type=2 精选评论 |
   """
   @spec list(
-          SDK.client,
+          SDK.client(),
           msg_data_id,
           begin :: integer,
           count :: integer,
           comment_type,
           index :: integer
-        ) :: SDK.response
-  def list(client, msg_data_id, begin, count, type, index \\ 0) when count <= 50 and type in 0..2 do
+        ) :: SDK.response()
+  def list(client, msg_data_id, begin, count, type, index \\ 0)
+      when count <= 50 and type in 0..2 do
     client.request(
       :post,
       url: "/cgi-bin/comment/list",
-      body: json_map(
-        msg_data_id: msg_data_id,
-        index: index,
-        begin: begin,
-        count: count,
-        type: type
-      )
+      body:
+        json_map(
+          msg_data_id: msg_data_id,
+          index: index,
+          begin: begin,
+          count: count,
+          type: type
+        )
     )
   end
 
@@ -93,16 +95,17 @@ defmodule WeChat.SDK.Comment do
   ## API Docs
     [link](#{@doc_link}){:target="_blank"}
   """
-  @spec mark_elect(SDK.client, msg_data_id, user_comment_id, index :: integer) :: SDK.response
+  @spec mark_elect(SDK.client(), msg_data_id, user_comment_id, index :: integer) :: SDK.response()
   def mark_elect(client, msg_data_id, user_comment_id, index \\ 0) do
     client.request(
       :post,
       url: "/cgi-bin/comment/markelect",
-      body: json_map(
-        msg_data_id: msg_data_id,
-        index: index,
-        user_comment_id: user_comment_id
-      )
+      body:
+        json_map(
+          msg_data_id: msg_data_id,
+          index: index,
+          user_comment_id: user_comment_id
+        )
     )
   end
 
@@ -112,16 +115,18 @@ defmodule WeChat.SDK.Comment do
   ## API Docs
     [link](#{@doc_link}){:target="_blank"}
   """
-  @spec unmark_elect(SDK.client, msg_data_id, user_comment_id, index :: integer) :: SDK.response
+  @spec unmark_elect(SDK.client(), msg_data_id, user_comment_id, index :: integer) ::
+          SDK.response()
   def unmark_elect(client, msg_data_id, user_comment_id, index \\ 0) do
     client.request(
       :post,
       url: "/cgi-bin/comment/unmarkelect",
-      body: json_map(
-        msg_data_id: msg_data_id,
-        index: index,
-        user_comment_id: user_comment_id
-      )
+      body:
+        json_map(
+          msg_data_id: msg_data_id,
+          index: index,
+          user_comment_id: user_comment_id
+        )
     )
   end
 
@@ -131,16 +136,17 @@ defmodule WeChat.SDK.Comment do
   ## API Docs
     [link](#{@doc_link}){:target="_blank"}
   """
-  @spec delete(SDK.client, msg_data_id, user_comment_id, index :: integer) :: SDK.response
+  @spec delete(SDK.client(), msg_data_id, user_comment_id, index :: integer) :: SDK.response()
   def delete(client, msg_data_id, user_comment_id, index \\ 0) do
     client.request(
       :post,
       url: "/cgi-bin/comment/delete",
-      body: json_map(
-        msg_data_id: msg_data_id,
-        index: index,
-        user_comment_id: user_comment_id
-      )
+      body:
+        json_map(
+          msg_data_id: msg_data_id,
+          index: index,
+          user_comment_id: user_comment_id
+        )
     )
   end
 
@@ -150,17 +156,19 @@ defmodule WeChat.SDK.Comment do
   ## API Docs
     [link](#{@doc_link}){:target="_blank"}
   """
-  @spec add_reply(SDK.client, msg_data_id, user_comment_id, content, index :: integer) :: SDK.response
+  @spec add_reply(SDK.client(), msg_data_id, user_comment_id, content, index :: integer) ::
+          SDK.response()
   def add_reply(client, msg_data_id, user_comment_id, content, index \\ 0) do
     client.request(
       :post,
       url: "/cgi-bin/comment/reply/add",
-      body: json_map(
-        msg_data_id: msg_data_id,
-        index: index,
-        user_comment_id: user_comment_id,
-        content: content
-      )
+      body:
+        json_map(
+          msg_data_id: msg_data_id,
+          index: index,
+          user_comment_id: user_comment_id,
+          content: content
+        )
     )
   end
 
@@ -170,16 +178,18 @@ defmodule WeChat.SDK.Comment do
   ## API Docs
     [link](#{@doc_link}){:target="_blank"}
   """
-  @spec delete_reply(SDK.client, msg_data_id, user_comment_id, index :: integer) :: SDK.response
+  @spec delete_reply(SDK.client(), msg_data_id, user_comment_id, index :: integer) ::
+          SDK.response()
   def delete_reply(client, msg_data_id, user_comment_id, index \\ 0) do
     client.request(
       :post,
       url: "/cgi-bin/comment/reply/delete",
-      body: json_map(
-        msg_data_id: msg_data_id,
-        index: index,
-        user_comment_id: user_comment_id
-      )
+      body:
+        json_map(
+          msg_data_id: msg_data_id,
+          index: index,
+          user_comment_id: user_comment_id
+        )
     )
   end
 end

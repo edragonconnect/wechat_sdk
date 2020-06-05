@@ -8,7 +8,7 @@ defmodule WeChat.SDK.UserTag do
   alias WeChat.SDK
 
   @type tag_id :: integer
-  @type tag_name :: String.t
+  @type tag_name :: String.t()
 
   @doc_link "https://developers.weixin.qq.com/doc/offiaccount/User_Management/User_Tag_Management.html"
 
@@ -18,16 +18,17 @@ defmodule WeChat.SDK.UserTag do
   ## API Docs
     [link](#{@doc_link}#1){:target="_blank"}
   """
-  @spec create(SDK.client, tag_name) :: SDK.response
+  @spec create(SDK.client(), tag_name) :: SDK.response()
   def create(client, name) do
     client.request(
       :post,
       url: "/cgi-bin/tags/create",
-      body: json_map(
-        tag: %{
-          name: name
-        }
-      )
+      body:
+        json_map(
+          tag: %{
+            name: name
+          }
+        )
     )
   end
 
@@ -37,7 +38,7 @@ defmodule WeChat.SDK.UserTag do
   ## API Docs
     [link](#{@doc_link}#2){:target="_blank"}
   """
-  @spec get(SDK.client) :: SDK.response
+  @spec get(SDK.client()) :: SDK.response()
   def get(client) do
     client.request(:get, url: "/cgi-bin/tags/get")
   end
@@ -48,17 +49,18 @@ defmodule WeChat.SDK.UserTag do
   ## API Docs
     [link](#{@doc_link}#3){:target="_blank"}
   """
-  @spec update(SDK.client, tag_id, tag_name) :: SDK.response
+  @spec update(SDK.client(), tag_id, tag_name) :: SDK.response()
   def update(client, id, name) do
     client.request(
       :post,
       url: "/cgi-bin/tags/update",
-      body: json_map(
-        tag: %{
-          id: id,
-          name: name
-        }
-      )
+      body:
+        json_map(
+          tag: %{
+            id: id,
+            name: name
+          }
+        )
     )
   end
 
@@ -68,16 +70,17 @@ defmodule WeChat.SDK.UserTag do
   ## API Docs
     [link](#{@doc_link}#4){:target="_blank"}
   """
-  @spec delete(SDK.client, tag_id) :: SDK.response
+  @spec delete(SDK.client(), tag_id) :: SDK.response()
   def delete(client, id) do
     client.request(
       :post,
       url: "/cgi-bin/tags/delete",
-      body: json_map(
-        tag: %{
-          id: id
-        }
-      )
+      body:
+        json_map(
+          tag: %{
+            id: id
+          }
+        )
     )
   end
 
@@ -87,25 +90,25 @@ defmodule WeChat.SDK.UserTag do
   ## API Docs
     [link](#{@doc_link}#5){:target="_blank"}
   """
-  @spec get_tag_users(SDK.client, tag_id) :: SDK.response
+  @spec get_tag_users(SDK.client(), tag_id) :: SDK.response()
   def get_tag_users(client, id) do
     client.request(
       :post,
       url: "/cgi-bin/user/tag/get",
-      body: json_map(
-        tagid: id
-      )
+      body: json_map(tagid: id)
     )
   end
-  @spec get_tag_users(SDK.client, tag_id, next_openid :: SDK.openid) :: SDK.response
+
+  @spec get_tag_users(SDK.client(), tag_id, next_openid :: SDK.openid()) :: SDK.response()
   def get_tag_users(client, id, next_openid) do
     client.request(
       :post,
       url: "/cgi-bin/user/tag/get",
-      body: json_map(
-        tagid: id,
-        next_openid: next_openid
-      )
+      body:
+        json_map(
+          tagid: id,
+          next_openid: next_openid
+        )
     )
   end
 
@@ -115,15 +118,16 @@ defmodule WeChat.SDK.UserTag do
   ## API Docs
     [link](#{@doc_link}){:target="_blank"}
   """
-  @spec batch_tagging_users(SDK.client, tag_id, [SDK.openid]) :: SDK.response
+  @spec batch_tagging_users(SDK.client(), tag_id, [SDK.openid()]) :: SDK.response()
   def batch_tagging_users(client, id, openid_list) do
     client.request(
       :post,
       url: "/cgi-bin/tags/members/batchtagging",
-      body: json_map(
-        tagid: id,
-        openid_list: openid_list
-      )
+      body:
+        json_map(
+          tagid: id,
+          openid_list: openid_list
+        )
     )
   end
 
@@ -133,15 +137,16 @@ defmodule WeChat.SDK.UserTag do
   ## API Docs
     [link](#{@doc_link}){:target="_blank"}
   """
-  @spec batch_untagging_users(SDK.client, tag_id, [SDK.openid]) :: SDK.response
+  @spec batch_untagging_users(SDK.client(), tag_id, [SDK.openid()]) :: SDK.response()
   def batch_untagging_users(client, id, openid_list) do
     client.request(
       :post,
       url: "/cgi-bin/tags/members/batchuntagging",
-      body: json_map(
-        tagid: id,
-        openid_list: openid_list
-      )
+      body:
+        json_map(
+          tagid: id,
+          openid_list: openid_list
+        )
     )
   end
 
@@ -151,14 +156,12 @@ defmodule WeChat.SDK.UserTag do
   ## API Docs
     [link](#{@doc_link}){:target="_blank"}
   """
-  @spec get_user_tags(SDK.client, SDK.openid) :: SDK.response
+  @spec get_user_tags(SDK.client(), SDK.openid()) :: SDK.response()
   def get_user_tags(client, openid) do
     client.request(
       :post,
       url: "/cgi-bin/tags/getidlist",
-      body: json_map(
-        openid: openid
-      )
+      body: json_map(openid: openid)
     )
   end
 end

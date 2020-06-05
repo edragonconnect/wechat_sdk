@@ -1,21 +1,24 @@
 defmodule WeChat.SDK do
   @moduledoc false
-  @type appid :: String.t
-  @type openid :: String.t
-  @type unionid :: String.t
+  @type appid :: String.t()
+  @type openid :: String.t()
+  @type unionid :: String.t()
   @type client :: module
   @type response :: {:ok, status :: integer, data :: map} | {:error, %WeChat.Error{}}
 
   defmacro __using__(opts \\ []) do
     {role, opts} = Keyword.pop(opts, :role, :common)
+
     case role in [:common, :component] do
       true ->
         :skip
+
       false ->
         raise ArgumentError, "please set role in [:common, :component]"
     end
 
     caller_module = __CALLER__.module
+
     {sub_modules, files} =
       [
         WeChat.SDK.Material,
@@ -29,12 +32,12 @@ defmodule WeChat.SDK do
         WeChat.SDK.Comment
       ]
       |> Enum.map_reduce(
-           [],
-           fn module, acc ->
-             {file, ast} = gen_sub_module(module, caller_module)
-             {ast, [quote(do: @external_resource unquote(file)) | acc]}
-           end
-         )
+        [],
+        fn module, acc ->
+          {file, ast} = gen_sub_module(module, caller_module)
+          {ast, [quote(do: @external_resource(unquote(file))) | acc]}
+        end
+      )
 
     default_opts =
       opts
@@ -61,9 +64,11 @@ defmodule WeChat.SDK do
               {:ok, term()} | {:error, WeChat.error()}
       def request(method, options) do
         options = WeChat.Utils.merge_keyword(options, unquote(default_opts))
+
         case apply(WeChat, unquote(request_function), [method, options]) do
           {:ok, %{status: status, body: body}} ->
             {:ok, status, body}
+
           response ->
             response
         end
@@ -75,6 +80,7 @@ defmodule WeChat.SDK do
 
   def gen_sub_module(module, parent_module) do
     file = module.__info__(:compile)[:source]
+
     {:ok, ast} =
       file
       |> File.read!()
@@ -83,7 +89,7 @@ defmodule WeChat.SDK do
     file =
       to_string(file)
       |> String.split("/")
-      |> Enum.drop_while(& &1 != "wechat_sdk")
+      |> Enum.drop_while(&(&1 != "wechat_sdk"))
       |> Path.join()
 
     client_module =
@@ -104,15 +110,19 @@ defmodule WeChat.SDK do
         fn
           {:defmodule, c_m, [{:__aliases__, c_a, _}, do_list]} ->
             [do: {:__block__, [], list}] = do_list
+
             do_list = [
-              do: {:__block__, [], [
-                quote(do: alias unquote(parent_module)),
-                quote(do: @file unquote(to_string(module)))
-                | list
-              ]}
+              do:
+                {:__block__, [],
+                 [
+                   quote(do: alias(unquote(parent_module))),
+                   quote(do: @file(unquote(to_string(module))))
+                   | list
+                 ]}
             ]
 
             {:defmodule, c_m, [{:__aliases__, c_a, [new_module_name]}, do_list]}
+
           {:spec, c_s, ast} ->
             # del first argument
             ast =
@@ -122,10 +132,14 @@ defmodule WeChat.SDK do
                   {fun_name, context, [{{:., _, [{:__aliases__, _, _}, :client]}, _, _} | args]}
                   when is_atom(fun_name) ->
                     {fun_name, context, args}
-                  sub_ast -> sub_ast
+
+                  sub_ast ->
+                    sub_ast
                 end
               )
+
             {:spec, c_s, ast}
+
           {:def, c_s, ast} ->
             ast =
               Macro.prewalk(
@@ -134,15 +148,20 @@ defmodule WeChat.SDK do
                   {:., context, [{:client, c_c, nil}, :request]} ->
                     # replace first argument
                     {:., context, [{:__aliases__, c_c, [client_module]}, :request]}
+
                   {fun_name, context, [{:client, _, nil} | args]} when is_atom(fun_name) ->
                     # del first argument
                     {fun_name, context, args}
-                  sub_ast -> sub_ast
+
+                  sub_ast ->
+                    sub_ast
                 end
               )
+
             {:def, c_s, ast}
+
           ast ->
-            #IO.inspect(ast)
+            # IO.inspect(ast)
             ast
         end
       )
@@ -167,16 +186,16 @@ defmodule WeChat.SDK do
     | only_fans_can_comment | 否 | Uint32 是否粉丝才可评论，0所有人可评论，1粉丝才可评论 |
     """
     @type t :: %__MODULE__{
-                 title: String.t,
-                 thumb_media_id: WeChat.SDK.Material.media_id,
-                 author: String.t,
-                 digest: String.t,
-                 show_cover_pic: integer,
-                 content: String.t,
-                 content_source_url: String.t,
-                 need_open_comment: integer,
-                 only_fans_can_comment: integer
-               }
+            title: String.t(),
+            thumb_media_id: WeChat.SDK.Material.media_id(),
+            author: String.t(),
+            digest: String.t(),
+            show_cover_pic: integer,
+            content: String.t(),
+            content_source_url: String.t(),
+            need_open_comment: integer,
+            only_fans_can_comment: integer
+          }
 
     defstruct [
       :title,

@@ -10,11 +10,11 @@ defmodule WeChat.SDK.Message do
 
   @doc_link "https://developers.weixin.qq.com/doc/offiaccount/Message_Management/Service_Center_messages.html"
 
-  @type template_id :: String.t
-  @type title :: String.t
-  @type description :: String.t
-  @type url :: String.t
-  @type pic_url :: String.t
+  @type template_id :: String.t()
+  @type title :: String.t()
+  @type description :: String.t()
+  @type url :: String.t()
+  @type pic_url :: String.t()
 
   @doc """
   获取模板列表
@@ -22,7 +22,7 @@ defmodule WeChat.SDK.Message do
   ## API Docs
     [link](#{@doc_link}#3){:target="_blank"}
   """
-  @spec get_all_private_template(SDK.client) :: SDK.response
+  @spec get_all_private_template(SDK.client()) :: SDK.response()
   def get_all_private_template(client) do
     client.request(:get, url: "/cgi-bin/message/template/get_all_private_template")
   end
@@ -33,19 +33,22 @@ defmodule WeChat.SDK.Message do
   ## API Docs
     [link](#{@doc_link}#5){:target="_blank"}
   """
-  @spec send_template_message(SDK.client, SDK.openid, template_id, data :: map) :: SDK.response
+  @spec send_template_message(SDK.client(), SDK.openid(), template_id, data :: map) ::
+          SDK.response()
   def send_template_message(client, openid, template_id, data) do
     client.request(
       :post,
       url: "/cgi-bin/message/template/send",
-      body: json_map(
-        touser: openid,
-        template_id: template_id,
-        data: data
-      )
+      body:
+        json_map(
+          touser: openid,
+          template_id: template_id,
+          data: data
+        )
     )
   end
-  @spec send_template_message(SDK.client, body :: map) :: SDK.response
+
+  @spec send_template_message(SDK.client(), body :: map) :: SDK.response()
   def send_template_message(client, body) do
     client.request(
       :post,
@@ -60,18 +63,20 @@ defmodule WeChat.SDK.Message do
   ## API Docs
     [link](#{@doc_link}#7){:target="_blank"}
   """
-  @spec send_custom_message_text(SDK.client, SDK.openid, content :: String.t) :: SDK.response
+  @spec send_custom_message_text(SDK.client(), SDK.openid(), content :: String.t()) ::
+          SDK.response()
   def send_custom_message_text(client, openid, content) do
     client.request(
       :post,
       url: "/cgi-bin/message/custom/send",
-      body: json_map(
-        touser: openid,
-        msgtype: "text",
-        text: %{
-          content: content
-        }
-      )
+      body:
+        json_map(
+          touser: openid,
+          msgtype: "text",
+          text: %{
+            content: content
+          }
+        )
     )
   end
 
@@ -81,7 +86,8 @@ defmodule WeChat.SDK.Message do
   ## API Docs
     [link](#{@doc_link}#7){:target="_blank"}
   """
-  @spec send_custom_message_news(SDK.client, SDK.openid, title, description, url, pic_url) :: SDK.response
+  @spec send_custom_message_news(SDK.client(), SDK.openid(), title, description, url, pic_url) ::
+          SDK.response()
   def send_custom_message_news(client, openid, title, description, url, pic_url) do
     send_custom_message(
       client,
@@ -103,7 +109,8 @@ defmodule WeChat.SDK.Message do
   ## API Docs
     [link](#{@doc_link}#7){:target="_blank"}
   """
-  @spec send_custom_message_mp_news(SDK.client, SDK.openid, Material.media_id) :: SDK.response
+  @spec send_custom_message_mp_news(SDK.client(), SDK.openid(), Material.media_id()) ::
+          SDK.response()
   def send_custom_message_mp_news(client, openid, media_id) do
     send_custom_message(
       client,
@@ -123,7 +130,7 @@ defmodule WeChat.SDK.Message do
   ## API Docs
     [link](#{@doc_link}#7){:target="_blank"}
   """
-  @spec send_custom_message_card(SDK.client, SDK.openid, Card.card_id) :: SDK.response
+  @spec send_custom_message_card(SDK.client(), SDK.openid(), Card.card_id()) :: SDK.response()
   def send_custom_message_card(client, openid, card_id) do
     send_custom_message(
       client,
@@ -155,16 +162,18 @@ defmodule WeChat.SDK.Message do
   ## API Docs
     [link](#{@doc_link}#8){:target="_blank"}
   """
-  @spec typing(SDK.client, SDK.openid, is_typing :: boolean) :: SDK.response
+  @spec typing(SDK.client(), SDK.openid(), is_typing :: boolean) :: SDK.response()
   def typing(client, openid, is_typing \\ true) do
     command = if(is_typing, do: "Typing", else: "CancelTyping")
+
     client.request(
       :post,
       url: "/cgi-bin/message/custom/typing",
-      body: json_map(
-        touser: openid,
-        command: command
-      )
+      body:
+        json_map(
+          touser: openid,
+          command: command
+        )
     )
   end
 end

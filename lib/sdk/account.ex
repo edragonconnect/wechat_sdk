@@ -10,7 +10,7 @@ defmodule WeChat.SDK.Account do
     * `QR_LIMIT_SCENE`      为永久的整型参数值
     * `QR_LIMIT_STR_SCENE`  为永久的字符串参数值
   """
-  @type qrcode_action_name :: String.t
+  @type qrcode_action_name :: String.t()
 
   @doc """
   生成二维码
@@ -24,26 +24,34 @@ defmodule WeChat.SDK.Account do
   ## API Docs
     [link](https://developers.weixin.qq.com/doc/offiaccount/Account_Management/Generating_a_Parametric_QR_Code.html){:target="_blank"}
   """
-  @spec create_qrcode(SDK.client, scene_id :: String.t, qrcode_action_name, expire_seconds :: integer) :: SDK.response
-  def create_qrcode(client, scene_id, action_name \\ "QR_LIMIT_SCENE", expire_seconds \\ 1800) when action_name in [
-    "QR_SCENE",
-    "QR_STR_SCENE",
-    "QR_LIMIT_SCENE",
-    "QR_LIMIT_STR_SCENE"
-  ] do
-    scene_key = action_name in ["QR_STR_SCENE", "QR_LIMIT_STR_SCENE"] && :scene_str || :scene_id
+  @spec create_qrcode(
+          SDK.client(),
+          scene_id :: String.t(),
+          qrcode_action_name,
+          expire_seconds :: integer
+        ) :: SDK.response()
+  def create_qrcode(client, scene_id, action_name \\ "QR_LIMIT_SCENE", expire_seconds \\ 1800)
+      when action_name in [
+             "QR_SCENE",
+             "QR_STR_SCENE",
+             "QR_LIMIT_SCENE",
+             "QR_LIMIT_STR_SCENE"
+           ] do
+    scene_key = (action_name in ["QR_STR_SCENE", "QR_LIMIT_STR_SCENE"] && :scene_str) || :scene_id
+
     client.request(
       :get,
       url: "/cgi-bin/qrcode/create",
-      body: json_map(
-        action_name: action_name,
-        expire_seconds: expire_seconds,
-        action_info: %{
-          scene: %{
-            scene_key => scene_id
+      body:
+        json_map(
+          action_name: action_name,
+          expire_seconds: expire_seconds,
+          action_info: %{
+            scene: %{
+              scene_key => scene_id
+            }
           }
-        }
-      )
+        )
     )
   end
 
@@ -53,15 +61,16 @@ defmodule WeChat.SDK.Account do
   ## API Docs
     [link](https://developers.weixin.qq.com/doc/offiaccount/Account_Management/URL_Shortener.html){:target="_blank"}
   """
-  @spec short_url(SDK.client, long_url :: String.t) :: SDK.response
+  @spec short_url(SDK.client(), long_url :: String.t()) :: SDK.response()
   def short_url(client, long_url) do
     client.request(
       :get,
       url: "/cgi-bin/shorturl",
-      body: json_map(
-        action: "long2short",
-        long_url: long_url
-      )
+      body:
+        json_map(
+          action: "long2short",
+          long_url: long_url
+        )
     )
   end
 end

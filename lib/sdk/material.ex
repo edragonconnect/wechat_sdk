@@ -11,15 +11,15 @@ defmodule WeChat.SDK.Material do
     * String.t :: ["image", "video", "voice", "news"]
     * atom :: [:image, :video, :voice, :news]
   """
-  @type material_type :: String.t | atom
+  @type material_type :: String.t() | atom
   @typedoc """
   素材的数量，取值在1到20之间
 
   material_count in 1..20
   """
   @type material_count :: integer
-  @type media_id :: String.t
-  @type article :: SDK.Article.t
+  @type media_id :: String.t()
+  @type article :: SDK.Article.t()
 
   @doc """
   新增临时素材
@@ -27,20 +27,24 @@ defmodule WeChat.SDK.Material do
   ## API Docs
     [link](https://developers.weixin.qq.com/doc/offiaccount/Asset_Management/New_temporary_materials.html){:target="_blank"}
   """
-  @spec upload_media(SDK.client, material_type, file_path :: Path.t) :: SDK.response
+  @spec upload_media(SDK.client(), material_type, file_path :: Path.t()) :: SDK.response()
   def upload_media(client, type, file_path) do
     media = %UploadMedia{type: type, file_path: file_path}
     body = %{media: media}
+
     client.request(
       :post,
       url: "/cgi-bin/media/upload",
       body: {:form, body}
     )
   end
-  @spec upload_media(SDK.client, material_type, file_name :: String.t, file_content :: binary) :: SDK.response
+
+  @spec upload_media(SDK.client(), material_type, file_name :: String.t(), file_content :: binary) ::
+          SDK.response()
   def upload_media(client, type, file_name, file_content) do
     media = %UploadMediaContent{type: type, file_name: file_name, file_content: file_content}
     body = %{media: media}
+
     client.request(
       :post,
       url: "/cgi-bin/media/upload",
@@ -54,7 +58,7 @@ defmodule WeChat.SDK.Material do
   ## API Docs
     [link](https://developers.weixin.qq.com/doc/offiaccount/Asset_Management/Get_temporary_materials.html){:target="_blank"}
   """
-  @spec get_media(SDK.client, media_id) :: SDK.response
+  @spec get_media(SDK.client(), media_id) :: SDK.response()
   def get_media(client, media_id) do
     client.request(
       :get,
@@ -71,7 +75,7 @@ defmodule WeChat.SDK.Material do
   ## API Docs
     [link](https://developers.weixin.qq.com/doc/offiaccount/Asset_Management/Adding_Permanent_Assets.html#新增永久图文素材){:target="_blank"}
   """
-  @spec add_news(SDK.client, articles :: [article]) :: SDK.response
+  @spec add_news(SDK.client(), articles :: [article]) :: SDK.response()
   def add_news(client, articles) do
     client.request(
       :post,
@@ -123,7 +127,7 @@ defmodule WeChat.SDK.Material do
   ## API Docs
     [link](https://developers.weixin.qq.com/doc/offiaccount/Asset_Management/Getting_Permanent_Assets.html){:target="_blank"}
   """
-  @spec get_material(SDK.client, media_id) :: SDK.response
+  @spec get_material(SDK.client(), media_id) :: SDK.response()
   def get_material(client, media_id) do
     client.request(
       :post,
@@ -138,7 +142,7 @@ defmodule WeChat.SDK.Material do
   ## API Docs
     [link](https://developers.weixin.qq.com/doc/offiaccount/Asset_Management/Deleting_Permanent_Assets.html){:target="_blank"}
   """
-  @spec del_material(SDK.client, media_id) :: SDK.response
+  @spec del_material(SDK.client(), media_id) :: SDK.response()
   def del_material(client, media_id) do
     client.request(
       :post,
@@ -153,7 +157,7 @@ defmodule WeChat.SDK.Material do
   ## API Docs
     [link](https://developers.weixin.qq.com/doc/offiaccount/Asset_Management/Editing_Permanent_Rich_Media_Assets.html){:target="_blank"}
   """
-  @spec update_news(SDK.client, media_id, article, index :: integer) :: SDK.response
+  @spec update_news(SDK.client(), media_id, article, index :: integer) :: SDK.response()
   def update_news(client, media_id, article, index \\ 0) do
     # 不支持编辑最后两个字段
     article =
@@ -164,11 +168,12 @@ defmodule WeChat.SDK.Material do
     client.request(
       :post,
       url: "/cgi-bin/material/update_news",
-      body: json_map(
-        media_id: media_id,
-        index: index,
-        article: article
-      )
+      body:
+        json_map(
+          media_id: media_id,
+          index: index,
+          article: article
+        )
     )
   end
 
@@ -178,7 +183,7 @@ defmodule WeChat.SDK.Material do
   ## API Docs
     [link](https://developers.weixin.qq.com/doc/offiaccount/Asset_Management/Get_the_total_of_all_materials.html){:target="_blank"}
   """
-  @spec get_material_count(SDK.client) :: SDK.response
+  @spec get_material_count(SDK.client()) :: SDK.response()
   def get_material_count(client) do
     client.request(:get, url: "/cgi-bin/material/get_materialcount")
   end
@@ -194,16 +199,18 @@ defmodule WeChat.SDK.Material do
   ## API Docs
     [link](https://developers.weixin.qq.com/doc/offiaccount/Asset_Management/Get_materials_list.html){:target="_blank"}
   """
-  @spec batch_get_material(SDK.client, material_type, material_count, offset :: integer) :: SDK.response
+  @spec batch_get_material(SDK.client(), material_type, material_count, offset :: integer) ::
+          SDK.response()
   def batch_get_material(client, type, count \\ 10, offset \\ 0) when count in 1..20 do
     client.request(
       :post,
       url: "/cgi-bin/material/batchget_material",
-      body: json_map(
-        type: type,
-        offset: offset,
-        count: count
-      )
+      body:
+        json_map(
+          type: type,
+          offset: offset,
+          count: count
+        )
     )
   end
 end
