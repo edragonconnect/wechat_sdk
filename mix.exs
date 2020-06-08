@@ -24,7 +24,8 @@ defmodule WeChat.SDK.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:elixir_wechat, github: "edragonconnect/elixir_wechat", branch: "v2"},
+      #{:elixir_wechat, github: "edragonconnect/elixir_wechat", branch: "v2"},
+      {:elixir_wechat, github: "edragonconnect/elixir_wechat", branch: "optimize_using"},
       {:ex_doc, "~> 0.22", only: [:docs, :dev], runtime: false}
     ]
   end

@@ -29,7 +29,8 @@ defmodule WeChat.SDK do
         WeChat.SDK.UserTag,
         WeChat.SDK.UserBlacklist,
         WeChat.SDK.Account,
-        WeChat.SDK.Comment
+        WeChat.SDK.Comment,
+        WeChat.SDK.JS
       ]
       |> Enum.map_reduce(
         [],
@@ -52,10 +53,20 @@ defmodule WeChat.SDK do
       Enum.join([role, "request"], "_")
       |> String.to_atom()
 
+    appid =
+      case role do
+        :common ->
+          Keyword.get(default_opts, :appid)
+
+        :component ->
+          Keyword.get(default_opts, :authorizer_appid)
+      end
+
     quote do
       require Logger
 
       def default_opts, do: unquote(default_opts)
+      def appid, do: unquote(appid)
 
       @doc """
       See WeChat.request/2 for more information.
@@ -145,9 +156,9 @@ defmodule WeChat.SDK do
               Macro.prewalk(
                 ast,
                 fn
-                  {:., context, [{:client, c_c, nil}, :request]} ->
+                  {:., context, [{:client, c_c, nil}, fun_name]} ->
                     # replace first argument
-                    {:., context, [{:__aliases__, c_c, [client_module]}, :request]}
+                    {:., context, [{:__aliases__, c_c, [client_module]}, fun_name]}
 
                   {fun_name, context, [{:client, _, nil} | args]} when is_atom(fun_name) ->
                     # del first argument
