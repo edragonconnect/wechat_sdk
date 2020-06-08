@@ -12,36 +12,36 @@ defmodule WeChat.SDK.Card do
   @type card_id :: String.t()
   @typedoc """
   卡券类型
-    * `"GROUPON"` - 团购券
-    * `"DISCOUNT"` - 折扣券
-    * `"GIFT"` - 礼品券
-    * `"CASH"` - 代金券
-    * `"GENERAL_COUPON"` - 通用券
-    * `"MEMBER_CARD"` - 会员卡
-    * `"SCENIC_TICKET"` - 景点门票
-    * `"MOVIE_TICKET"` - 电影票
-    * `"BOARDING_PASS"` - 飞机票
-    * `"MEETING_TICKET"` - 会议门票
-    * `"BUS_TICKET"` - 汽车票
+    * `"GROUPON"`         - 团购券
+    * `"DISCOUNT"`        - 折扣券
+    * `"GIFT"`            - 礼品券
+    * `"CASH"`            - 代金券
+    * `"GENERAL_COUPON"`  - 通用券
+    * `"MEMBER_CARD"`     - 会员卡
+    * `"SCENIC_TICKET"`   - 景点门票
+    * `"MOVIE_TICKET"`    - 电影票
+    * `"BOARDING_PASS"`   - 飞机票
+    * `"MEETING_TICKET"`  - 会议门票
+    * `"BUS_TICKET"`      - 汽车票
   """
   @type card_type :: String.t()
   @type card_code :: String.t()
   @typedoc """
   支持开发者拉出指定状态的卡券列表
-    * `"CARD_STATUS_NOT_VERIFY"` - 待审核
+    * `"CARD_STATUS_NOT_VERIFY"`  - 待审核
     * `"CARD_STATUS_VERIFY_FAIL"` - 审核失败
-    * `"CARD_STATUS_VERIFY_OK"` - 通过审核
-    * `"CARD_STATUS_DELETE"` - 卡券被商户删除
-    * `"CARD_STATUS_DISPATCH"` - 在公众平台投放过的卡券
+    * `"CARD_STATUS_VERIFY_OK"`   - 通过审核
+    * `"CARD_STATUS_DELETE"`      - 卡券被商户删除
+    * `"CARD_STATUS_DISPATCH"`    - 在公众平台投放过的卡券
   """
   @type card_status :: String.t()
   @type date :: Date.t() | String.t()
   @typedoc """
-  `cond_source` - 卡券来源
+  卡券来源
     * `0` - 为公众平台创建的卡券数据
     * `1` - 是API创建的卡券数据
   """
-  @type cond_source :: integer
+  @type cond_source :: 0 | 1
 
   @doc """
   创建卡券
@@ -107,6 +107,12 @@ defmodule WeChat.SDK.Card do
     )
   end
 
+  @doc """
+  批量查询卡券列表 - 只获取指定状态
+
+  ## API Docs
+    [link](#{@doc_link}/Cards_and_Offer/Managing_Coupons_Vouchers_and_Cards.html#3){:target="_blank"}
+  """
   @spec batch_get_cards(SDK.client(), [card_status], count :: integer, offset :: integer) ::
           SDK.response()
   def batch_get_cards(client, status_list, count, offset) when count <= 50 do
@@ -249,6 +255,12 @@ defmodule WeChat.SDK.Card do
     )
   end
 
+  @doc """
+  获取免费券数据 - 只获取指定卡券
+
+  ## API Docs
+    [link](#{@doc_link}/Cards_and_Offer/Managing_Coupons_Vouchers_and_Cards.html#11){:target="_blank"}
+  """
   @spec get_card_analysis(
           SDK.client(),
           card_id,

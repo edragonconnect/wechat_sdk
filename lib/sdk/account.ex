@@ -5,10 +5,10 @@ defmodule WeChat.SDK.Account do
 
   @typedoc """
   二维码类型
-    * `QR_SCENE`            为临时的整型参数值
-    * `QR_STR_SCENE`        为临时的字符串参数值
-    * `QR_LIMIT_SCENE`      为永久的整型参数值
-    * `QR_LIMIT_STR_SCENE`  为永久的字符串参数值
+    * `"QR_SCENE"`            为临时的整型参数值
+    * `"QR_STR_SCENE"`        为临时的字符串参数值
+    * `"QR_LIMIT_SCENE"`      为永久的整型参数值
+    * `"QR_LIMIT_STR_SCENE"`  为永久的字符串参数值
   """
   @type qrcode_action_name :: String.t()
 
@@ -16,10 +16,10 @@ defmodule WeChat.SDK.Account do
   生成二维码
 
   ## 二维码类型(action_name)
-    * `QR_SCENE`            为临时的整型参数值
-    * `QR_STR_SCENE`        为临时的字符串参数值
-    * `QR_LIMIT_SCENE`      为永久的整型参数值
-    * `QR_LIMIT_STR_SCENE`  为永久的字符串参数值
+    * `"QR_SCENE"`            为临时的整型参数值
+    * `"QR_STR_SCENE"`        为临时的字符串参数值
+    * `"QR_LIMIT_SCENE"`      为永久的整型参数值
+    * `"QR_LIMIT_STR_SCENE"`  为永久的字符串参数值
 
   ## API Docs
     [link](https://developers.weixin.qq.com/doc/offiaccount/Account_Management/Generating_a_Parametric_QR_Code.html){:target="_blank"}

@@ -11,11 +11,11 @@ defmodule WeChat.SDK.Comment do
   @type user_comment_id :: integer
   @typedoc """
   评论类型
-    * 0 - 普通评论&精选评论
-    * 1 - 普通评论
-    * 2 - 精选评论
+    * `0` - 普通评论&精选评论
+    * `1` - 普通评论
+    * `2` - 精选评论
   """
-  @type comment_type :: integer
+  @type comment_type :: 0 | 1 | 2
   @type content :: String.t()
 
   @doc_link "https://developers.weixin.qq.com/doc/offiaccount/Comments_management/Image_Comments_Management_Interface.html"

@@ -3,6 +3,14 @@ defmodule WeChat.SDK.User do
   import Jason.Helpers
   alias WeChat.SDK
 
+  @typedoc """
+  国家地区语言
+    * `"zh_CN"` - 简体
+    * `"zh_TW"` - 繁体
+    * `"en"` - 英语
+  """
+  @type lang :: String.t()
+
   @doc """
   设置用户备注名
 
@@ -32,6 +40,39 @@ defmodule WeChat.SDK.User do
       query: [
         openid: openid
       ]
+    )
+  end
+
+  @doc """
+  获取用户基本信息(UnionID机制)
+
+  ## API Docs
+    [link](https://developers.weixin.qq.com/doc/offiaccount/User_Management/Get_users_basic_information_UnionID.html#UinonId){:target="_blank"}
+  """
+  @spec user_info(SDK.client(), SDK.openid(), lang) :: SDK.response()
+  def user_info(client, openid, lang) do
+    client.request(
+      :get,
+      url: "/cgi-bin/user/info",
+      query: [
+        openid: openid,
+        lang: lang
+      ]
+    )
+  end
+
+  @doc """
+  批量获取用户基本信息
+
+  ## API Docs
+    [link](https://developers.weixin.qq.com/doc/offiaccount/User_Management/Get_users_basic_information_UnionID.html){:target="_blank"}
+  """
+  @spec batch_get_user_info(SDK.client(), [map]) :: SDK.response()
+  def batch_get_user_info(client, user_list) do
+    client.request(
+      :post,
+      url: "/cgi-bin/user/info/batchget",
+      body: json_map(user_list: user_list)
     )
   end
 
@@ -66,6 +107,12 @@ defmodule WeChat.SDK.User do
     client.request(:get, url: "/user/get")
   end
 
+  @doc """
+  获取用户列表
+
+  ## API Docs
+    [link](https://developers.weixin.qq.com/doc/offiaccount/User_Management/Getting_a_User_List.html){:target="_blank"}
+  """
   @spec get_users(SDK.client(), SDK.openid()) :: SDK.response()
   def get_users(client, next_openid) do
     client.request(

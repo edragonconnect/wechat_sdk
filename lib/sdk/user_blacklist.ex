@@ -20,6 +20,12 @@ defmodule WeChat.SDK.UserBlacklist do
     client.request(:post, url: "/cgi-bin/tags/members/getblacklist")
   end
 
+  @doc """
+  获取公众号的黑名单列表 - 翻页
+
+  ## API Docs
+    [link](#{@doc_link}#1){:target="_blank"}
+  """
   @spec get_black_list(SDK.client(), SDK.openid()) :: SDK.response()
   def get_black_list(client, begin_openid) do
     client.request(

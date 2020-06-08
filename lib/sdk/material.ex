@@ -5,9 +5,12 @@ defmodule WeChat.SDK.Material do
 
   @typedoc """
   素材的类型
+    * `image` - 图片
+    * `video` - 视频
+    * `voice` - 语音
+    * `news`  - 图文
 
-  图片（image）、视频（video）、语音 （voice）、图文（news）
-
+  support type
     * String.t :: ["image", "video", "voice", "news"]
     * atom :: [:image, :video, :voice, :news]
   """
@@ -22,7 +25,7 @@ defmodule WeChat.SDK.Material do
   @type article :: SDK.Article.t()
 
   @doc """
-  新增临时素材
+  新增临时素材 - 文件
 
   ## API Docs
     [link](https://developers.weixin.qq.com/doc/offiaccount/Asset_Management/New_temporary_materials.html){:target="_blank"}
@@ -39,6 +42,12 @@ defmodule WeChat.SDK.Material do
     )
   end
 
+  @doc """
+  新增临时素材 - binary
+
+  ## API Docs
+    [link](https://developers.weixin.qq.com/doc/offiaccount/Asset_Management/New_temporary_materials.html){:target="_blank"}
+  """
   @spec upload_media(SDK.client(), material_type, file_name :: String.t(), file_content :: binary) ::
           SDK.response()
   def upload_media(client, type, file_name, file_content) do

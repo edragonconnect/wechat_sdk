@@ -99,6 +99,12 @@ defmodule WeChat.SDK.UserTag do
     )
   end
 
+  @doc """
+  获取标签下粉丝列表 - 翻页
+
+  ## API Docs
+    [link](#{@doc_link}#5){:target="_blank"}
+  """
   @spec get_tag_users(SDK.client(), tag_id, next_openid :: SDK.openid()) :: SDK.response()
   def get_tag_users(client, id, next_openid) do
     client.request(

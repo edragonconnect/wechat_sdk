@@ -48,6 +48,12 @@ defmodule WeChat.SDK.Message do
     )
   end
 
+  @doc """
+  发送模板消息
+
+  ## API Docs
+    [link](#{@doc_link}#5){:target="_blank"}
+  """
   @spec send_template_message(SDK.client(), body :: map) :: SDK.response()
   def send_template_message(client, body) do
     client.request(
