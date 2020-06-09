@@ -90,7 +90,7 @@ defmodule WeChat.SDK do
         end
       end
 
-      defoverridable default_opts: 0, appid: 0, request: 2
+      defoverridable request: 2
     end
   end
 
