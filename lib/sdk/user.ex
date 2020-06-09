@@ -91,14 +91,6 @@ defmodule WeChat.SDK.User do
         code: code
       ]
     )
-
-    #    with {:ok, %{status: 200, body: body}} <- SDK.oauth2_component(
-    #      :get,
-    #      :access_token,
-    #      [appid: appid, code: code, grant_type: "authorization_code", component_appid: @component_appid]
-    #    ) do
-    #      {:ok, body}
-    #    end
   end
 
   @doc """
