@@ -5,6 +5,18 @@ defmodule WeChat.SDK do
   @type unionid :: String.t()
   @type client :: module
   @type response :: {:ok, status :: integer, data :: map} | {:error, %WeChat.Error{}}
+  @common_modules [
+    WeChat.SDK.Material,
+    WeChat.SDK.Card,
+    WeChat.SDK.CustomService,
+    WeChat.SDK.Message,
+    WeChat.SDK.User,
+    WeChat.SDK.UserTag,
+    WeChat.SDK.UserBlacklist,
+    WeChat.SDK.Account,
+    WeChat.SDK.Comment,
+    WeChat.SDK.JS
+  ]
 
   defmacro __using__(opts \\ []) do
     {role, opts} = Keyword.pop(opts, :role, :common)
@@ -17,25 +29,18 @@ defmodule WeChat.SDK do
         raise ArgumentError, "please set role in [:common, :component]"
     end
 
-    caller_module = __CALLER__.module
+    sub_modules =
+      case role do
+        :common -> @common_modules
+        :component -> [WeChat.SDK.Component | @common_modules]
+      end
 
-    {sub_modules, files} =
-      [
-        WeChat.SDK.Material,
-        WeChat.SDK.Card,
-        WeChat.SDK.CustomService,
-        WeChat.SDK.Message,
-        WeChat.SDK.User,
-        WeChat.SDK.UserTag,
-        WeChat.SDK.UserBlacklist,
-        WeChat.SDK.Account,
-        WeChat.SDK.Comment,
-        WeChat.SDK.JS
-      ]
-      |> Enum.map_reduce(
+    {sub_module_ast_list, files} =
+      Enum.map_reduce(
+        sub_modules,
         [],
         fn module, acc ->
-          {file, ast} = gen_sub_module(module, caller_module)
+          {file, ast} = gen_sub_module(module, __CALLER__.module)
           {ast, [quote(do: @external_resource(unquote(file))) | acc]}
         end
       )
@@ -45,7 +50,7 @@ defmodule WeChat.SDK do
       |> Macro.prewalk(&Macro.expand(&1, __CALLER__))
       |> Keyword.take([:adapter_storage, :appid, :authorizer_appid])
 
-    [gen_request(role, default_opts) | files] ++ sub_modules
+    [gen_request(role, default_opts) | files] ++ sub_module_ast_list
   end
 
   def gen_request(role, default_opts) do
@@ -85,7 +90,7 @@ defmodule WeChat.SDK do
         end
       end
 
-      defoverridable default_opts: 0, request: 2
+      defoverridable default_opts: 0, appid: 0, request: 2
     end
   end
 

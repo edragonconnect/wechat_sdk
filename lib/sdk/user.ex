@@ -77,6 +77,31 @@ defmodule WeChat.SDK.User do
   end
 
   @doc """
+  通过code换取网页授权access_token
+
+  ## API Docs
+    [link](https://developers.weixin.qq.com/doc/offiaccount/OA_Web_Apps/Wechat_webpage_authorization.html#1)
+  """
+  def code2access_token(client, code) do
+    client.request(
+      :get,
+      url: "/sns/oauth2/access_token",
+      query: [
+        grant_type: "authorization_code",
+        code: code
+      ]
+    )
+
+    #    with {:ok, %{status: 200, body: body}} <- SDK.oauth2_component(
+    #      :get,
+    #      :access_token,
+    #      [appid: appid, code: code, grant_type: "authorization_code", component_appid: @component_appid]
+    #    ) do
+    #      {:ok, body}
+    #    end
+  end
+
+  @doc """
   拉取用户信息(需scope为 snsapi_userinfo)
 
   如果网页授权作用域为snsapi_userinfo,则此时开发者可以通过access_token和openid拉取用户信息了.

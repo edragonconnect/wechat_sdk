@@ -56,7 +56,11 @@ defmodule WeChat.SDK.MixProject do
             # 账号管理
             WeChat.SDK.Account,
             # 微信卡券(WIP)
-            WeChat.SDK.Card
+            WeChat.SDK.Card,
+            # JS-SDK(WIP)
+            WeChat.SDK.JS,
+            # 第三方平台
+            WeChat.SDK.Component
           ]
         },
         {"Structure", [WeChat.SDK.Article]}
