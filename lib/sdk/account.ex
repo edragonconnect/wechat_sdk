@@ -22,7 +22,7 @@ defmodule WeChat.SDK.Account do
     * `"QR_LIMIT_STR_SCENE"`  为永久的字符串参数值
 
   ## API Docs
-    [link](https://developers.weixin.qq.com/doc/offiaccount/Account_Management/Generating_a_Parametric_QR_Code.html){:target="_blank"}
+    [link](#{SDK.doc_link_prefix()}/offiaccount/Account_Management/Generating_a_Parametric_QR_Code.html){:target="_blank"}
   """
   @spec create_qrcode(
           SDK.client(),
@@ -59,7 +59,7 @@ defmodule WeChat.SDK.Account do
   长链接转成短链接
 
   ## API Docs
-    [link](https://developers.weixin.qq.com/doc/offiaccount/Account_Management/URL_Shortener.html){:target="_blank"}
+    [link](#{SDK.doc_link_prefix()}/offiaccount/Account_Management/URL_Shortener.html){:target="_blank"}
   """
   @spec short_url(SDK.client(), long_url :: String.t()) :: SDK.response()
   def short_url(client, long_url) do

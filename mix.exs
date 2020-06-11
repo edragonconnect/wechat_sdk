@@ -38,10 +38,12 @@ defmodule WeChat.SDK.MixProject do
         {
           "SDK APIs",
           [
-            # 消息管理
-            WeChat.SDK.Message,
+            # 消息管理 - 客服消息
+            WeChat.SDK.CustomMessage,
             # 消息管理 - 客服帐号管理
             WeChat.SDK.CustomService,
+            # 消息管理 - 模板消息
+            WeChat.SDK.Template,
             # 素材管理
             WeChat.SDK.Material,
             # 图文消息留言管理

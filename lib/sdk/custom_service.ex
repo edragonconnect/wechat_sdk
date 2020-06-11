@@ -7,7 +7,7 @@ defmodule WeChat.SDK.CustomService do
   import Jason.Helpers
   alias WeChat.SDK
 
-  @doc_link "https://developers.weixin.qq.com/doc/offiaccount/Message_Management/Service_Center_messages.html"
+  @doc_link "#{SDK.doc_link_prefix()}/offiaccount/Message_Management/Service_Center_messages.html"
 
   @type kf_account :: String.t()
   @type nickname :: String.t()

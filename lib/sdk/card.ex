@@ -7,7 +7,7 @@ defmodule WeChat.SDK.Card do
   import Jason.Helpers
   alias WeChat.SDK
 
-  @doc_link "https://developers.weixin.qq.com/doc/offiaccount"
+  @doc_link "#{SDK.doc_link_prefix()}/offiaccount/Cards_and_Offer"
 
   @type card_id :: String.t()
   @typedoc """
@@ -47,7 +47,7 @@ defmodule WeChat.SDK.Card do
   创建卡券
 
   ## API Docs
-    [link](#{@doc_link}/Cards_and_Offer/Create_a_Coupon_Voucher_or_Card.html#8){:target="_blank"}
+    [link](#{@doc_link}/Create_a_Coupon_Voucher_or_Card.html#8){:target="_blank"}
   """
   @spec create(SDK.client(), body :: map) :: SDK.response()
   def create(client, body) do
@@ -58,7 +58,7 @@ defmodule WeChat.SDK.Card do
   获取用户已领取卡券
 
   ## API Docs
-    [link](#{@doc_link}/Cards_and_Offer/Managing_Coupons_Vouchers_and_Cards.html#1){:target="_blank"}
+    [link](#{@doc_link}/Managing_Coupons_Vouchers_and_Cards.html#1){:target="_blank"}
   """
   @spec get_user_card_list(SDK.client(), SDK.openid()) :: SDK.response()
   def get_user_card_list(client, openid) do
@@ -81,7 +81,7 @@ defmodule WeChat.SDK.Card do
   查看卡券详情
 
   ## API Docs
-    [link](#{@doc_link}/Cards_and_Offer/Managing_Coupons_Vouchers_and_Cards.html#2){:target="_blank"}
+    [link](#{@doc_link}/Managing_Coupons_Vouchers_and_Cards.html#2){:target="_blank"}
   """
   @spec get_card_info(SDK.client(), card_id) :: SDK.response()
   def get_card_info(client, card_id) do
@@ -96,7 +96,7 @@ defmodule WeChat.SDK.Card do
   批量查询卡券列表
 
   ## API Docs
-    [link](#{@doc_link}/Cards_and_Offer/Managing_Coupons_Vouchers_and_Cards.html#3){:target="_blank"}
+    [link](#{@doc_link}/Managing_Coupons_Vouchers_and_Cards.html#3){:target="_blank"}
   """
   @spec batch_get_cards(SDK.client(), count :: integer, offset :: integer) :: SDK.response()
   def batch_get_cards(client, count, offset) when count <= 50 do
@@ -111,7 +111,7 @@ defmodule WeChat.SDK.Card do
   批量查询卡券列表 - 只获取指定状态
 
   ## API Docs
-    [link](#{@doc_link}/Cards_and_Offer/Managing_Coupons_Vouchers_and_Cards.html#3){:target="_blank"}
+    [link](#{@doc_link}/Managing_Coupons_Vouchers_and_Cards.html#3){:target="_blank"}
   """
   @spec batch_get_cards(SDK.client(), [card_status], count :: integer, offset :: integer) ::
           SDK.response()
@@ -127,7 +127,7 @@ defmodule WeChat.SDK.Card do
   更改卡券信息
 
   ## API Docs
-    [link](#{@doc_link}/Cards_and_Offer/Managing_Coupons_Vouchers_and_Cards.html#4){:target="_blank"}
+    [link](#{@doc_link}/Managing_Coupons_Vouchers_and_Cards.html#4){:target="_blank"}
   """
   @spec update_card_info(SDK.client(), card_id, card_type, card_info :: map) :: SDK.response()
   def update_card_info(client, card_id, card_type, card_info) do
@@ -145,7 +145,7 @@ defmodule WeChat.SDK.Card do
   修改库存
 
   ## API Docs
-    [link](#{@doc_link}/Cards_and_Offer/Managing_Coupons_Vouchers_and_Cards.html#5){:target="_blank"}
+    [link](#{@doc_link}/Managing_Coupons_Vouchers_and_Cards.html#5){:target="_blank"}
   """
   @spec modify_card_stock(SDK.client(), card_id, change_count :: integer) :: SDK.response()
   def modify_card_stock(client, card_id, change_count) do
@@ -164,7 +164,7 @@ defmodule WeChat.SDK.Card do
   更改Code
 
   ## API Docs
-    [link](#{@doc_link}/Cards_and_Offer/Managing_Coupons_Vouchers_and_Cards.html#6){:target="_blank"}
+    [link](#{@doc_link}/Managing_Coupons_Vouchers_and_Cards.html#6){:target="_blank"}
   """
   @spec update_card_code(SDK.client(), card_id, old_code :: card_code, new_code :: card_code) ::
           SDK.response()
@@ -180,7 +180,7 @@ defmodule WeChat.SDK.Card do
   删除卡券
 
   ## API Docs
-    [link](#{@doc_link}/Cards_and_Offer/Managing_Coupons_Vouchers_and_Cards.html#7){:target="_blank"}
+    [link](#{@doc_link}/Managing_Coupons_Vouchers_and_Cards.html#7){:target="_blank"}
   """
   @spec check_card_code(SDK.client(), card_id) :: SDK.response()
   def check_card_code(client, card_id) do
@@ -195,7 +195,7 @@ defmodule WeChat.SDK.Card do
   设置卡券失效接口-非自定义code卡券的请求
 
   ## API Docs
-    [link](#{@doc_link}/Cards_and_Offer/Managing_Coupons_Vouchers_and_Cards.html#8){:target="_blank"}
+    [link](#{@doc_link}/Managing_Coupons_Vouchers_and_Cards.html#8){:target="_blank"}
   """
   @spec unavailable_card_code(SDK.client(), card_code, reason :: String.t()) :: SDK.response()
   def unavailable_card_code(client, code, reason) do
@@ -210,7 +210,7 @@ defmodule WeChat.SDK.Card do
   设置卡券失效接口-自定义code卡券的请求
 
   ## API Docs
-    [link](#{@doc_link}/Cards_and_Offer/Managing_Coupons_Vouchers_and_Cards.html#8){:target="_blank"}
+    [link](#{@doc_link}/Managing_Coupons_Vouchers_and_Cards.html#8){:target="_blank"}
   """
   @spec unavailable_card_code(SDK.client(), card_id, card_code, reason :: String.t()) ::
           SDK.response()
@@ -226,7 +226,7 @@ defmodule WeChat.SDK.Card do
   拉取卡券概况数据
 
   ## API Docs
-    [link](#{@doc_link}/Cards_and_Offer/Managing_Coupons_Vouchers_and_Cards.html#10){:target="_blank"}
+    [link](#{@doc_link}/Managing_Coupons_Vouchers_and_Cards.html#10){:target="_blank"}
   """
   @spec get_card_bizuin_info(SDK.client(), begin_date :: date, end_date :: date, cond_source) ::
           SDK.response()
@@ -243,7 +243,7 @@ defmodule WeChat.SDK.Card do
   获取免费券数据
 
   ## API Docs
-    [link](#{@doc_link}/Cards_and_Offer/Managing_Coupons_Vouchers_and_Cards.html#11){:target="_blank"}
+    [link](#{@doc_link}/Managing_Coupons_Vouchers_and_Cards.html#11){:target="_blank"}
   """
   @spec get_card_analysis(SDK.client(), begin_date :: date, end_date :: date, cond_source) ::
           SDK.response()
@@ -259,7 +259,7 @@ defmodule WeChat.SDK.Card do
   获取免费券数据 - 只获取指定卡券
 
   ## API Docs
-    [link](#{@doc_link}/Cards_and_Offer/Managing_Coupons_Vouchers_and_Cards.html#11){:target="_blank"}
+    [link](#{@doc_link}/Managing_Coupons_Vouchers_and_Cards.html#11){:target="_blank"}
   """
   @spec get_card_analysis(
           SDK.client(),
@@ -287,7 +287,7 @@ defmodule WeChat.SDK.Card do
   查询Code
 
   ## API Docs
-    [link](#{@doc_link}/Cards_and_Offer/Redeeming_a_coupon_voucher_or_card.html#1){:target="_blank"}
+    [link](#{@doc_link}/Redeeming_a_coupon_voucher_or_card.html#1){:target="_blank"}
   """
   @spec check_card_code(SDK.client(), card_id, card_code, check_consume :: boolean) ::
           SDK.response()

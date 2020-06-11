@@ -7,6 +7,8 @@ defmodule WeChat.SDK.JS do
   import Jason.Helpers
   alias WeChat.SDK
 
+  @doc_link "#{SDK.doc_link_prefix()}/offiaccount/OA_Web_Apps/JS-SDK.html"
+
   @typedoc """
   JS API的临时票据类型
     * `"jsapi"` - JS-SDK Config
@@ -18,7 +20,7 @@ defmodule WeChat.SDK.JS do
   JS-SDK配置
 
   ## API Docs
-    [link](https://developers.weixin.qq.com/doc/offiaccount/OA_Web_Apps/JS-SDK.html#4)
+    [link](#{@doc_link}#4)
   """
   @spec js_sdk_config(SDK.client(), url :: String.t()) :: SDK.response()
   def js_sdk_config(client, url) do
@@ -42,7 +44,7 @@ defmodule WeChat.SDK.JS do
   微信卡券配置 - 添加卡券
 
   ## API Docs
-    [link](https://developers.weixin.qq.com/doc/offiaccount/OA_Web_Apps/JS-SDK.html#53)
+    [link](#{@doc_link}#53)
   """
   def add_card_config(client, card_id, outer_str) do
     case js_api_ticket(client, "wx_card") do
@@ -73,7 +75,7 @@ defmodule WeChat.SDK.JS do
   微信卡券配置 - 添加卡券(绑定openid)
 
   ## API Docs
-    [link](https://developers.weixin.qq.com/doc/offiaccount/OA_Web_Apps/JS-SDK.html#53)
+    [link](#{@doc_link}#53)
   """
   def add_card_config(client, card_id, outer_str, openid) do
     case js_api_ticket(client, "wx_card") do
@@ -105,7 +107,7 @@ defmodule WeChat.SDK.JS do
   获取api_ticket
 
   ## API Docs
-    [link](https://developers.weixin.qq.com/doc/offiaccount/OA_Web_Apps/JS-SDK.html#62)
+    [link](#{@doc_link}#62)
   """
   @spec js_api_ticket(SDK.client(), js_api_ticket_type) :: SDK.response()
   def js_api_ticket(client, type) do

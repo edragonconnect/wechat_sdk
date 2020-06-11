@@ -7,7 +7,7 @@ defmodule WeChat.SDK.UserBlacklist do
   import Jason.Helpers
   alias WeChat.SDK
 
-  @doc_link "https://developers.weixin.qq.com/doc/offiaccount/User_Management/Manage_blacklist.html"
+  @doc_link "#{SDK.doc_link_prefix()}/offiaccount/User_Management/Manage_blacklist.html"
 
   @doc """
   获取公众号的黑名单列表

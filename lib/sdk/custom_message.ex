@@ -1,6 +1,6 @@
-defmodule WeChat.SDK.Message do
+defmodule WeChat.SDK.CustomMessage do
   @moduledoc """
-  消息管理
+  消息管理 - 客服消息
 
   [API Docs Link](https://developers.weixin.qq.com/doc/offiaccount/Message_Management/Service_Center_messages.html){:target="_blank"}
   """
@@ -8,7 +8,7 @@ defmodule WeChat.SDK.Message do
   alias WeChat.SDK
   alias WeChat.SDK.{Card, Material}
 
-  @doc_link "https://developers.weixin.qq.com/doc/offiaccount/Message_Management/Service_Center_messages.html"
+  @doc_link "#{SDK.doc_link_prefix()}/offiaccount/Message_Management/Service_Center_messages.html"
 
   @type template_id :: String.t()
   @type title :: String.t()
@@ -18,62 +18,14 @@ defmodule WeChat.SDK.Message do
   @type content :: String.t()
 
   @doc """
-  获取模板列表
-
-  ## API Docs
-    [link](#{@doc_link}#3){:target="_blank"}
-  """
-  @spec get_all_private_template(SDK.client()) :: SDK.response()
-  def get_all_private_template(client) do
-    client.request(:get, url: "/cgi-bin/message/template/get_all_private_template")
-  end
-
-  @doc """
-  发送模板消息
-
-  ## API Docs
-    [link](#{@doc_link}#5){:target="_blank"}
-  """
-  @spec send_template_message(SDK.client(), SDK.openid(), template_id, data :: map) ::
-          SDK.response()
-  def send_template_message(client, openid, template_id, data) do
-    client.request(
-      :post,
-      url: "/cgi-bin/message/template/send",
-      body:
-        json_map(
-          touser: openid,
-          template_id: template_id,
-          data: data
-        )
-    )
-  end
-
-  @doc """
-  发送模板消息
-
-  ## API Docs
-    [link](#{@doc_link}#5){:target="_blank"}
-  """
-  @spec send_template_message(SDK.client(), body :: map) :: SDK.response()
-  def send_template_message(client, body) do
-    client.request(
-      :post,
-      url: "/cgi-bin/message/template/send",
-      body: body
-    )
-  end
-
-  @doc """
   客服消息接口-发送文本消息
 
   ## API Docs
     [link](#{@doc_link}#7){:target="_blank"}
   """
-  @spec send_custom_message_text(SDK.client(), SDK.openid(), content) ::
-          SDK.response()
-  def send_custom_message_text(client, openid, content) do
-    send_custom_message(
+  @spec send_text(SDK.client(), SDK.openid(), content) :: SDK.response()
+  def send_text(client, openid, content) do
+    send_msg(
       client,
       json_map(
         touser: openid,
@@ -89,15 +41,10 @@ defmodule WeChat.SDK.Message do
   ## API Docs
     [link](#{@doc_link}#7){:target="_blank"}
   """
-  @spec send_custom_message_text(
-          SDK.client(),
-          SDK.openid(),
-          content,
-          SDK.CustomService.kf_account()
-        ) ::
+  @spec send_text(SDK.client(), SDK.openid(), content, SDK.CustomService.kf_account()) ::
           SDK.response()
-  def send_custom_message_text(client, openid, content, kf_account) do
-    send_custom_message(
+  def send_text(client, openid, content, kf_account) do
+    send_msg(
       client,
       json_map(
         touser: openid,
@@ -114,10 +61,9 @@ defmodule WeChat.SDK.Message do
   ## API Docs
     [link](#{@doc_link}#7){:target="_blank"}
   """
-  @spec send_custom_message_image(SDK.client(), SDK.openid(), SDK.Material.media_id()) ::
-          SDK.response()
-  def send_custom_message_image(client, openid, media_id) do
-    send_custom_message(
+  @spec send_image(SDK.client(), SDK.openid(), SDK.Material.media_id()) :: SDK.response()
+  def send_image(client, openid, media_id) do
+    send_msg(
       client,
       json_map(
         touser: openid,
@@ -133,10 +79,9 @@ defmodule WeChat.SDK.Message do
   ## API Docs
     [link](#{@doc_link}#7){:target="_blank"}
   """
-  @spec send_custom_message_voice(SDK.client(), SDK.openid(), SDK.Material.media_id()) ::
-          SDK.response()
-  def send_custom_message_voice(client, openid, media_id) do
-    send_custom_message(
+  @spec send_voice(SDK.client(), SDK.openid(), SDK.Material.media_id()) :: SDK.response()
+  def send_voice(client, openid, media_id) do
+    send_msg(
       client,
       json_map(
         touser: openid,
@@ -152,7 +97,7 @@ defmodule WeChat.SDK.Message do
   ## Example
 
   ```elixir
-  #{__MODULE__}.send_custom_message_video(client, openid, {
+  #{__MODULE__}.send_video(client, openid, {
     media_id:         "MEDIA_ID",
     thumb_media_id:   "MEDIA_ID",
     title:            "TITLE",
@@ -163,9 +108,9 @@ defmodule WeChat.SDK.Message do
   ## API Docs
     [link](#{@doc_link}#7){:target="_blank"}
   """
-  @spec send_custom_message_video(SDK.client(), SDK.openid(), map) :: SDK.response()
-  def send_custom_message_video(client, openid, map) do
-    send_custom_message(
+  @spec send_video(SDK.client(), SDK.openid(), map) :: SDK.response()
+  def send_video(client, openid, map) do
+    send_msg(
       client,
       json_map(
         touser: openid,
@@ -181,7 +126,7 @@ defmodule WeChat.SDK.Message do
   ## Example
 
   ```elixir
-  #{__MODULE__}.send_custom_message_music(client, openid, {
+  #{__MODULE__}.send_music(client, openid, {
     title:          "MUSIC_TITLE",
     description:    "MUSIC_DESCRIPTION",
     musicurl:       "MUSIC_URL",
@@ -193,9 +138,9 @@ defmodule WeChat.SDK.Message do
   ## API Docs
     [link](#{@doc_link}#7){:target="_blank"}
   """
-  @spec send_custom_message_music(SDK.client(), SDK.openid(), map) :: SDK.response()
-  def send_custom_message_music(client, openid, map) do
-    send_custom_message(
+  @spec send_music(SDK.client(), SDK.openid(), map) :: SDK.response()
+  def send_music(client, openid, map) do
+    send_msg(
       client,
       json_map(
         touser: openid,
@@ -211,7 +156,7 @@ defmodule WeChat.SDK.Message do
   ## Example
 
   ```elixir
-  #{__MODULE__}.send_custom_message_news(client, openid, {
+  #{__MODULE__}.send_news(client, openid, {
     title:        "Happy Day",
     description:  "Is Really A Happy Day",
     url:          "URL",
@@ -222,10 +167,10 @@ defmodule WeChat.SDK.Message do
   ## API Docs
     [link](#{@doc_link}#7){:target="_blank"}
   """
-  @spec send_custom_message_news(SDK.client(), SDK.openid(), title, description, url, pic_url) ::
+  @spec send_news(SDK.client(), SDK.openid(), title, description, url, pic_url) ::
           SDK.response()
-  def send_custom_message_news(client, openid, title, description, url, pic_url) do
-    send_custom_message(
+  def send_news(client, openid, title, description, url, pic_url) do
+    send_msg(
       client,
       json_map(
         touser: openid,
@@ -245,9 +190,9 @@ defmodule WeChat.SDK.Message do
   ## API Docs
     [link](#{@doc_link}#7){:target="_blank"}
   """
-  @spec send_custom_message_news(SDK.client(), SDK.openid(), article :: map) :: SDK.response()
-  def send_custom_message_news(client, openid, article) do
-    send_custom_message(
+  @spec send_news(SDK.client(), SDK.openid(), article :: map) :: SDK.response()
+  def send_news(client, openid, article) do
+    send_msg(
       client,
       json_map(
         touser: openid,
@@ -265,10 +210,9 @@ defmodule WeChat.SDK.Message do
   ## API Docs
     [link](#{@doc_link}#7){:target="_blank"}
   """
-  @spec send_custom_message_mp_news(SDK.client(), SDK.openid(), Material.media_id()) ::
-          SDK.response()
-  def send_custom_message_mp_news(client, openid, media_id) do
-    send_custom_message(
+  @spec send_mp_news(SDK.client(), SDK.openid(), Material.media_id()) :: SDK.response()
+  def send_mp_news(client, openid, media_id) do
+    send_msg(
       client,
       json_map(
         touser: openid,
@@ -284,7 +228,7 @@ defmodule WeChat.SDK.Message do
   ## Example
 
   ```elixir
-  #{__MODULE__}.send_custom_message_menu(client, openid, {
+  #{__MODULE__}.send_menu(client, openid, {
     head_content: "您对本次服务是否满意呢?",
     list: [
       {
@@ -303,9 +247,9 @@ defmodule WeChat.SDK.Message do
   ## API Docs
     [link](#{@doc_link}#7){:target="_blank"}
   """
-  @spec send_custom_message_menu(SDK.client(), SDK.openid(), map) :: SDK.response()
-  def send_custom_message_menu(client, openid, map) do
-    send_custom_message(
+  @spec send_menu(SDK.client(), SDK.openid(), map) :: SDK.response()
+  def send_menu(client, openid, map) do
+    send_msg(
       client,
       json_map(
         touser: openid,
@@ -321,9 +265,9 @@ defmodule WeChat.SDK.Message do
   ## API Docs
     [link](#{@doc_link}#7){:target="_blank"}
   """
-  @spec send_custom_message_card(SDK.client(), SDK.openid(), Card.card_id()) :: SDK.response()
-  def send_custom_message_card(client, openid, card_id) do
-    send_custom_message(
+  @spec send_card(SDK.client(), SDK.openid(), Card.card_id()) :: SDK.response()
+  def send_card(client, openid, card_id) do
+    send_msg(
       client,
       json_map(
         touser: openid,
@@ -338,7 +282,7 @@ defmodule WeChat.SDK.Message do
 
   ## Example
   ```elixir
-  #{__MODULE__}.send_custom_message_menu(client, openid, {
+  #{__MODULE__}.send_mini_program_page(client, openid, {
     title:    "title",
     appid:    "appid",
     pagepath: "pagepath",
@@ -349,9 +293,9 @@ defmodule WeChat.SDK.Message do
   ## API Docs
     [link](#{@doc_link}#7){:target="_blank"}
   """
-  @spec send_custom_message_miniprogrampage(SDK.client(), SDK.openid(), map) :: SDK.response()
-  def send_custom_message_miniprogrampage(client, openid, map) do
-    send_custom_message(
+  @spec send_mini_program_page(SDK.client(), SDK.openid(), map) :: SDK.response()
+  def send_mini_program_page(client, openid, map) do
+    send_msg(
       client,
       json_map(
         touser: openid,
@@ -367,7 +311,7 @@ defmodule WeChat.SDK.Message do
   ## API Docs
     [link](#{@doc_link}#7){:target="_blank"}
   """
-  def send_custom_message(client, body) do
+  def send_msg(client, body) do
     client.request(:post, url: "/cgi-bin/message/custom/send", body: body)
   end
 

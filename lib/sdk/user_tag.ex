@@ -10,7 +10,7 @@ defmodule WeChat.SDK.UserTag do
   @type tag_id :: integer
   @type tag_name :: String.t()
 
-  @doc_link "https://developers.weixin.qq.com/doc/offiaccount/User_Management/User_Tag_Management.html"
+  @doc_link "#{SDK.doc_link_prefix()}/offiaccount/User_Management/User_Tag_Management.html"
 
   @doc """
   创建标签

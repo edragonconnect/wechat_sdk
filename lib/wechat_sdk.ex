@@ -9,7 +9,8 @@ defmodule WeChat.SDK do
     WeChat.SDK.Material,
     WeChat.SDK.Card,
     WeChat.SDK.CustomService,
-    WeChat.SDK.Message,
+    WeChat.SDK.CustomMessage,
+    WeChat.SDK.Template,
     WeChat.SDK.User,
     WeChat.SDK.UserTag,
     WeChat.SDK.UserBlacklist,
@@ -94,7 +95,7 @@ defmodule WeChat.SDK do
     end
   end
 
-  def gen_sub_module(module, parent_module) do
+  defp gen_sub_module(module, parent_module) do
     file = module.__info__(:compile)[:source]
 
     {:ok, ast} =
@@ -225,4 +226,6 @@ defmodule WeChat.SDK do
       {:only_fans_can_comment, 1}
     ]
   end
+
+  def doc_link_prefix, do: "https://developers.weixin.qq.com/doc"
 end

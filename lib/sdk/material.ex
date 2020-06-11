@@ -3,6 +3,8 @@ defmodule WeChat.SDK.Material do
   import Jason.Helpers
   alias WeChat.{SDK, UploadMedia, UploadMediaContent}
 
+  @doc_link "#{SDK.doc_link_prefix()}/offiaccount/Asset_Management"
+
   @typedoc """
   素材的类型
     * `image` - 图片
@@ -28,7 +30,7 @@ defmodule WeChat.SDK.Material do
   新增临时素材 - 文件
 
   ## API Docs
-    [link](https://developers.weixin.qq.com/doc/offiaccount/Asset_Management/New_temporary_materials.html){:target="_blank"}
+    [link](#{@doc_link}/New_temporary_materials.html){:target="_blank"}
   """
   @spec upload_media(SDK.client(), material_type, file_path :: Path.t()) :: SDK.response()
   def upload_media(client, type, file_path) do
@@ -46,7 +48,7 @@ defmodule WeChat.SDK.Material do
   新增临时素材 - binary
 
   ## API Docs
-    [link](https://developers.weixin.qq.com/doc/offiaccount/Asset_Management/New_temporary_materials.html){:target="_blank"}
+    [link](#{@doc_link}/New_temporary_materials.html){:target="_blank"}
   """
   @spec upload_media(SDK.client(), material_type, file_name :: String.t(), file_content :: binary) ::
           SDK.response()
@@ -65,7 +67,7 @@ defmodule WeChat.SDK.Material do
   获取临时素材
 
   ## API Docs
-    [link](https://developers.weixin.qq.com/doc/offiaccount/Asset_Management/Get_temporary_materials.html){:target="_blank"}
+    [link](#{@doc_link}/Get_temporary_materials.html){:target="_blank"}
   """
   @spec get_media(SDK.client(), media_id) :: SDK.response()
   def get_media(client, media_id) do
@@ -82,7 +84,7 @@ defmodule WeChat.SDK.Material do
   新增永久图文素材
 
   ## API Docs
-    [link](https://developers.weixin.qq.com/doc/offiaccount/Asset_Management/Adding_Permanent_Assets.html#新增永久图文素材){:target="_blank"}
+    [link](#{@doc_link}/Adding_Permanent_Assets.html#新增永久图文素材){:target="_blank"}
   """
   @spec add_news(SDK.client(), articles :: [article]) :: SDK.response()
   def add_news(client, articles) do
@@ -97,7 +99,7 @@ defmodule WeChat.SDK.Material do
   #  上传图文消息内的图片获取URL
   #
   #  ## API Docs
-  #    [link](https://developers.weixin.qq.com/doc/offiaccount/Asset_Management/Adding_Permanent_Assets.html#上传图文消息内的图片获取URL){:target="_blank"}
+  #    [link](#{@doc_link}/Adding_Permanent_Assets.html#上传图文消息内的图片获取URL){:target="_blank"}
   #  """
   #  @spec upload_image(SDK.client, file_path :: Path.t) :: SDK.response
   #  def upload_image(client, file_path) do
@@ -124,7 +126,7 @@ defmodule WeChat.SDK.Material do
   #  新增其他类型永久素材
   #
   #  ## API Docs
-  #    [link](https://developers.weixin.qq.com/doc/offiaccount/Asset_Management/Adding_Permanent_Assets.html#新增其他类型永久素材){:target="_blank"}
+  #    [link](#{@doc_link}/Adding_Permanent_Assets.html#新增其他类型永久素材){:target="_blank"}
   #  """
   #  def add_material(client) do
   #    :todo
@@ -134,7 +136,7 @@ defmodule WeChat.SDK.Material do
   获取永久素材
 
   ## API Docs
-    [link](https://developers.weixin.qq.com/doc/offiaccount/Asset_Management/Getting_Permanent_Assets.html){:target="_blank"}
+    [link](#{@doc_link}/Getting_Permanent_Assets.html){:target="_blank"}
   """
   @spec get_material(SDK.client(), media_id) :: SDK.response()
   def get_material(client, media_id) do
@@ -149,7 +151,7 @@ defmodule WeChat.SDK.Material do
   删除永久素材
 
   ## API Docs
-    [link](https://developers.weixin.qq.com/doc/offiaccount/Asset_Management/Deleting_Permanent_Assets.html){:target="_blank"}
+    [link](#{@doc_link}/Deleting_Permanent_Assets.html){:target="_blank"}
   """
   @spec del_material(SDK.client(), media_id) :: SDK.response()
   def del_material(client, media_id) do
@@ -164,7 +166,7 @@ defmodule WeChat.SDK.Material do
   修改永久图文素材
 
   ## API Docs
-    [link](https://developers.weixin.qq.com/doc/offiaccount/Asset_Management/Editing_Permanent_Rich_Media_Assets.html){:target="_blank"}
+    [link](#{@doc_link}/Editing_Permanent_Rich_Media_Assets.html){:target="_blank"}
   """
   @spec update_news(SDK.client(), media_id, article, index :: integer) :: SDK.response()
   def update_news(client, media_id, article, index \\ 0) do
@@ -190,7 +192,7 @@ defmodule WeChat.SDK.Material do
   获取素材总数
 
   ## API Docs
-    [link](https://developers.weixin.qq.com/doc/offiaccount/Asset_Management/Get_the_total_of_all_materials.html){:target="_blank"}
+    [link](#{@doc_link}/Get_the_total_of_all_materials.html){:target="_blank"}
   """
   @spec get_material_count(SDK.client()) :: SDK.response()
   def get_material_count(client) do
@@ -206,7 +208,7 @@ defmodule WeChat.SDK.Material do
     * count:  返回素材的数量，取值在1到20之间
 
   ## API Docs
-    [link](https://developers.weixin.qq.com/doc/offiaccount/Asset_Management/Get_materials_list.html){:target="_blank"}
+    [link](#{@doc_link}/Get_materials_list.html){:target="_blank"}
   """
   @spec batch_get_material(SDK.client(), material_type, material_count, offset :: integer) ::
           SDK.response()

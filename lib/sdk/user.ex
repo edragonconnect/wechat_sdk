@@ -3,6 +3,8 @@ defmodule WeChat.SDK.User do
   import Jason.Helpers
   alias WeChat.SDK
 
+  @doc_link "#{SDK.doc_link_prefix()}/offiaccount/User_Management"
+
   @typedoc """
   国家地区语言
     * `"zh_CN"` - 简体
@@ -15,7 +17,7 @@ defmodule WeChat.SDK.User do
   设置用户备注名
 
   ## API Docs
-    [link](https://developers.weixin.qq.com/doc/offiaccount/User_Management/Configuring_user_notes.html){:target="_blank"}
+    [link](#{@doc_link}/Configuring_user_notes.html){:target="_blank"}
   """
   @spec update_remark(SDK.client(), SDK.openid(), remark :: String.t()) :: SDK.response()
   def update_remark(client, openid, remark) do
@@ -30,7 +32,7 @@ defmodule WeChat.SDK.User do
   获取用户基本信息(UnionID机制)
 
   ## API Docs
-    [link](https://developers.weixin.qq.com/doc/offiaccount/User_Management/Get_users_basic_information_UnionID.html#UinonId){:target="_blank"}
+    [link](#{@doc_link}/Get_users_basic_information_UnionID.html#UinonId){:target="_blank"}
   """
   @spec user_info(SDK.client(), SDK.openid()) :: SDK.response()
   def user_info(client, openid) do
@@ -47,7 +49,7 @@ defmodule WeChat.SDK.User do
   获取用户基本信息(UnionID机制)
 
   ## API Docs
-    [link](https://developers.weixin.qq.com/doc/offiaccount/User_Management/Get_users_basic_information_UnionID.html#UinonId){:target="_blank"}
+    [link](#{@doc_link}/Get_users_basic_information_UnionID.html#UinonId){:target="_blank"}
   """
   @spec user_info(SDK.client(), SDK.openid(), lang) :: SDK.response()
   def user_info(client, openid, lang) do
@@ -65,7 +67,7 @@ defmodule WeChat.SDK.User do
   批量获取用户基本信息
 
   ## API Docs
-    [link](https://developers.weixin.qq.com/doc/offiaccount/User_Management/Get_users_basic_information_UnionID.html){:target="_blank"}
+    [link](#{@doc_link}/Get_users_basic_information_UnionID.html){:target="_blank"}
   """
   @spec batch_get_user_info(SDK.client(), [map]) :: SDK.response()
   def batch_get_user_info(client, user_list) do
@@ -80,7 +82,7 @@ defmodule WeChat.SDK.User do
   通过code换取网页授权access_token
 
   ## API Docs
-    [link](https://developers.weixin.qq.com/doc/offiaccount/OA_Web_Apps/Wechat_webpage_authorization.html#1)
+    [link](#{SDK.doc_link_prefix()}/offiaccount/OA_Web_Apps/Wechat_webpage_authorization.html#1)
   """
   def code2access_token(client, code) do
     client.request(
@@ -99,7 +101,7 @@ defmodule WeChat.SDK.User do
   如果网页授权作用域为snsapi_userinfo,则此时开发者可以通过access_token和openid拉取用户信息了.
 
   ## API Docs
-    [link](https://developers.weixin.qq.com/doc/offiaccount/OA_Web_Apps/Wechat_webpage_authorization.html#3){:target="_blank"}
+    [link](#{SDK.doc_link_prefix()}/offiaccount/OA_Web_Apps/Wechat_webpage_authorization.html#3){:target="_blank"}
   """
   @spec sns_user_info(SDK.client(), SDK.openid(), access_token :: String.t()) :: SDK.response()
   def sns_user_info(client, openid, access_token) do
@@ -117,7 +119,7 @@ defmodule WeChat.SDK.User do
   获取用户列表
 
   ## API Docs
-    [link](https://developers.weixin.qq.com/doc/offiaccount/User_Management/Getting_a_User_List.html){:target="_blank"}
+    [link](#{@doc_link}/Getting_a_User_List.html){:target="_blank"}
   """
   @spec get_users(SDK.client()) :: SDK.response()
   def get_users(client) do
@@ -128,7 +130,7 @@ defmodule WeChat.SDK.User do
   获取用户列表
 
   ## API Docs
-    [link](https://developers.weixin.qq.com/doc/offiaccount/User_Management/Getting_a_User_List.html){:target="_blank"}
+    [link](#{@doc_link}/Getting_a_User_List.html){:target="_blank"}
   """
   @spec get_users(SDK.client(), SDK.openid()) :: SDK.response()
   def get_users(client, next_openid) do
