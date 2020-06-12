@@ -1,15 +1,22 @@
 defmodule WeChat.SDK do
   @moduledoc false
+
   @type appid :: String.t()
   @type openid :: String.t()
   @type unionid :: String.t()
+  @type username :: String.t()
+
   @type client :: module
   @type response :: {:ok, status :: integer, data :: map} | {:error, %WeChat.Error{}}
+
   @common_modules [
     WeChat.SDK.Material,
     WeChat.SDK.Card,
+    WeChat.SDK.CardManaging,
+    WeChat.SDK.CardDistributing,
     WeChat.SDK.CustomService,
     WeChat.SDK.CustomMessage,
+    WeChat.SDK.BatchSends,
     WeChat.SDK.Template,
     WeChat.SDK.User,
     WeChat.SDK.UserTag,

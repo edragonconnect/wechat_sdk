@@ -36,7 +36,18 @@ defmodule WeChat.SDK.MixProject do
       extras: ["README.md"],
       groups_for_modules: [
         {
-          "SDK APIs",
+          "用户管理 APIs",
+          [
+            # 用户管理
+            WeChat.SDK.User,
+            # 用户管理 - 标签管理
+            WeChat.SDK.UserTag,
+            # 用户管理 - 黑名单管理
+            WeChat.SDK.UserBlacklist
+          ]
+        },
+        {
+          "消息管理 APIs",
           [
             # 消息管理 - 客服消息
             WeChat.SDK.CustomMessage,
@@ -44,26 +55,35 @@ defmodule WeChat.SDK.MixProject do
             WeChat.SDK.CustomService,
             # 消息管理 - 模板消息
             WeChat.SDK.Template,
+            # 消息管理 - 群发接口和原创效验
+            WeChat.SDK.BatchSends
+          ]
+        },
+        {"微信卡券 APIs",
+         [
+           # 微信卡券(WIP)
+           WeChat.SDK.Card,
+           # 微信卡券 - 管理卡券
+           WeChat.SDK.CardManaging,
+           # 微信卡券 - 投放卡券
+           WeChat.SDK.CardDistributing
+         ]},
+        {
+          "Other APIs",
+          [
             # 素材管理
             WeChat.SDK.Material,
             # 图文消息留言管理
             WeChat.SDK.Comment,
-            # 用户管理
-            WeChat.SDK.User,
-            # 用户管理 - 标签管理
-            WeChat.SDK.UserTag,
-            # 用户管理 - 黑名单管理
-            WeChat.SDK.UserBlacklist,
             # 账号管理
             WeChat.SDK.Account,
-            # 微信卡券(WIP)
-            WeChat.SDK.Card,
             # JS-SDK(WIP)
             WeChat.SDK.JS,
             # 第三方平台
             WeChat.SDK.Component
           ]
         },
+        {"Basic Types", [WeChat.SDK]},
         {"Structure", [WeChat.SDK.Article]}
       ]
     ]
