@@ -72,6 +72,7 @@ WeChat.SDK.Material.batch_get_material(YourApp.WeChat.CodeName, :image, 2)
 * 用户管理
 * 账号管理
 * 微信卡券(WIP)
+* 第三方平台
 
 更多接口目前还在开发中……
 

@@ -84,13 +84,38 @@ defmodule WeChat.SDK.User do
   ## API Docs
     [link](#{SDK.doc_link_prefix()}/offiaccount/OA_Web_Apps/Wechat_webpage_authorization.html#1)
   """
+  @spec code2access_token(SDK.client, code :: String.t()) :: SDK.response()
   def code2access_token(client, code) do
+    appid = client.appid()
+    {adapter_storage, args} = Keyword.fetch!(client.default_opts(), :adapter_storage)
+
     client.request(
       :get,
       url: "/sns/oauth2/access_token",
       query: [
+        appid: appid,
+        secret: adapter_storage.secret_key(appid, args),
         grant_type: "authorization_code",
         code: code
+      ]
+    )
+  end
+
+  @doc """
+  刷新access_token
+
+  ## API Docs
+    [link](#{SDK.doc_link_prefix()}/offiaccount/OA_Web_Apps/Wechat_webpage_authorization.html#2)
+  """
+  @spec refresh_token(SDK.client, refresh_token :: String.t()) :: SDK.response()
+  def refresh_token(client, refresh_token) do
+    client.request(
+      :get,
+      url: "/sns/oauth2/refresh_token",
+      query: [
+        appid: client.appid(),
+        grant_type: "refresh_token",
+        refresh_token: refresh_token
       ]
     )
   end
@@ -108,6 +133,24 @@ defmodule WeChat.SDK.User do
     client.request(
       :get,
       url: "/sns/userinfo",
+      query: [
+        access_token: access_token,
+        openid: openid
+      ]
+    )
+  end
+
+  @doc """
+  检验授权凭证（access_token）是否有效
+
+  ## API Docs
+    [link](#{SDK.doc_link_prefix()}/offiaccount/OA_Web_Apps/Wechat_webpage_authorization.html#4){:target="_blank"}
+  """
+  @spec auth(SDK.client(), SDK.openid(), access_token :: String.t()) :: SDK.response()
+  def auth(client, openid, access_token) do
+    client.request(
+      :get,
+      url: "/sns/auth",
       query: [
         access_token: access_token,
         openid: openid

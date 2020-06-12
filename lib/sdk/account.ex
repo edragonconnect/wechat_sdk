@@ -73,4 +73,15 @@ defmodule WeChat.SDK.Account do
         )
     )
   end
+
+  @doc """
+  接口调用次数清零
+
+  ## API Docs
+    [link](#{SDK.doc_link_prefix()}/oplatform/Third-party_Platforms/Official_Accounts/Official_account_interface.html){:target="_blank"}
+  """
+  @spec clear_quota(SDK.client()) :: SDK.response()
+  def clear_quota(client) do
+    client.request(:post, url: "/cgi-bin/clear_quota", body: json_map(appid: client.appid()))
+  end
 end
