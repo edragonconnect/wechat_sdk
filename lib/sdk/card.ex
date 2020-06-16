@@ -65,7 +65,57 @@ defmodule WeChat.SDK.Card do
   end
 
   @doc """
+  设置快速买单
+
+  ## 功能介绍
+
+  微信卡券买单功能是微信卡券的一项新的能力，可以方便消费者买单时，直接录入消费金额，自动使用领到的优惠（券或卡）抵扣，并拉起微信支付快速完成付款。
+
+  微信买单（以下统称微信买单）的好处：
+
+  * 无需商户具备微信支付开发能力，即可完成订单生成，与微信支付打通。
+  * 可以通过手机公众号、电脑商户后台，轻松操作收款并查看核销记录，交易对账，并支持离线下载。
+  * 支持会员营销，二次营销，如会员卡交易送积分，抵扣积分，买单后赠券等。
+
+  ## API Docs
+    [link](#{@doc_link}/Create_a_Coupon_Voucher_or_Card.html#11){:target="_blank"}
+  """
+  @spec set_pay_cell(SDK.client(), card_id, is_open :: boolean) :: SDK.response()
+  def set_pay_cell(client, card_id, is_open) do
+    client.request(:post,
+      url: "/card/paycell/set",
+      body: json_map(card_id: card_id, is_open: is_open)
+    )
+  end
+
+  @doc """
+  设置自助核销
+
+  ## 功能介绍
+
+  自助核销与扫码/输码核销互为补充，卡券商户助手通过扫码/输码完成核销的同时，也确保了用券的真实性，适合有强对账需求的商户使用；而自助核销由用户发起，全程由用户操作，适合对账需求不强的商户使用。
+
+  目前，自助核销可能适合以下场景使用：
+
+  * 不允许店员上班期间带手机；
+  * 高峰期店内人流量大，扫码/输码核销速度不能满足短时需求；
+  * 会议入场，短时有大量核销任务；
+
+  ## API Docs
+    [link](#{@doc_link}/Create_a_Coupon_Voucher_or_Card.html#14){:target="_blank"}
+  """
+  @spec set_self_consume_cell(SDK.client(), card_id, is_open :: boolean) :: SDK.response()
+  def set_self_consume_cell(client, card_id, is_open) do
+    client.request(:post,
+      url: "/card/selfconsumecell/set",
+      body: json_map(card_id: card_id, is_open: is_open)
+    )
+  end
+
+  @doc """
   查询Code
+
+  我们强烈建议开发者在调用核销code接口之前调用查询code接口，并在核销之前对非法状态的code(如转赠中、已删除、已核销等)做出处理。
 
   ## API Docs
     [link](#{@doc_link}/Redeeming_a_coupon_voucher_or_card.html#1){:target="_blank"}
@@ -77,6 +127,59 @@ defmodule WeChat.SDK.Card do
       :post,
       url: "/card/code/get",
       body: json_map(card_id: card_id, code: card_code, check_consume: check_consume)
+    )
+  end
+
+  @doc """
+  核销Code接口
+
+  消耗code接口是核销卡券的唯一接口,开发者可以调用当前接口将用户的优惠券进行核销，该过程不可逆。
+
+  ## API Docs
+    [link](#{@doc_link}/Redeeming_a_coupon_voucher_or_card.html#2){:target="_blank"}
+  """
+  @spec consume_code(SDK.client(), card_code) :: SDK.response()
+  def consume_code(client, card_code) do
+    client.request(
+      :post,
+      url: "/card/code/consume",
+      body: json_map(code: card_code)
+    )
+  end
+
+  @doc """
+  核销Code接口
+
+  消耗code接口是核销卡券的唯一接口,开发者可以调用当前接口将用户的优惠券进行核销，该过程不可逆。
+
+  卡券ID(card_id): 创建卡券时use_custom_code填写true时必填。非自定义Code不必填写
+
+  ## API Docs
+    [link](#{@doc_link}/Redeeming_a_coupon_voucher_or_card.html#2){:target="_blank"}
+  """
+  @spec consume_code(SDK.client(), card_id, card_code) :: SDK.response()
+  def consume_code(client, card_id, card_code) do
+    client.request(
+      :post,
+      url: "/card/code/consume",
+      body: json_map(card_id: card_id, code: card_code)
+    )
+  end
+
+  @doc """
+  Code解码接口
+
+  消耗code接口是核销卡券的唯一接口,开发者可以调用当前接口将用户的优惠券进行核销，该过程不可逆。
+
+  ## API Docs
+    [link](#{@doc_link}/Redeeming_a_coupon_voucher_or_card.html#3){:target="_blank"}
+  """
+  @spec decrypt_code(SDK.client(), encrypt_code :: String.t()) :: SDK.response()
+  def decrypt_code(client, encrypt_code) do
+    client.request(
+      :post,
+      url: "/card/code/decrypt",
+      body: json_map(encrypt_code: encrypt_code)
     )
   end
 end
