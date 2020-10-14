@@ -73,10 +73,8 @@ defmodule WeChat.SDK.Material do
   def get_media(client, media_id) do
     client.request(
       :get,
-      url: "/cgi-bin/media/upload",
-      query: [
-        media_id: media_id
-      ]
+      url: "/cgi-bin/media/get",
+      query: [media_id: media_id]
     )
   end
 
