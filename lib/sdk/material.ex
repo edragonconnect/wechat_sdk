@@ -181,7 +181,7 @@ defmodule WeChat.SDK.Material do
         json_map(
           media_id: media_id,
           index: index,
-          article: article
+          articles: article
         )
     )
   end
