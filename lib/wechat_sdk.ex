@@ -56,7 +56,7 @@ defmodule WeChat.SDK do
     default_opts =
       opts
       |> Macro.prewalk(&Macro.expand(&1, __CALLER__))
-      |> Keyword.take([:adapter_storage, :appid, :authorizer_appid])
+      |> Keyword.take([:adapter_storage, :appid, :authorizer_appid, :scenario])
 
     [gen_request(role, default_opts) | files] ++ sub_module_ast_list
   end
