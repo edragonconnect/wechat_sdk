@@ -80,7 +80,9 @@ defmodule WeChat.SDK.MixProject do
             # JS-SDK(WIP)
             WeChat.SDK.JS,
             # 第三方平台
-            WeChat.SDK.Component
+            WeChat.SDK.Component,
+            # 小程序
+            WeChat.SDK.MiniProgram
           ]
         },
         {"Basic Types", [WeChat.SDK]},

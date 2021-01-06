@@ -28,19 +28,26 @@ defmodule WeChat.SDK do
 
   defmacro __using__(opts \\ []) do
     {role, opts} = Keyword.pop(opts, :role, :common)
+    {app_type, opts} = Keyword.pop(opts, :app_type, :official_account)
 
     case role in [:common, :component] do
-      true ->
-        :skip
-
-      false ->
-        raise ArgumentError, "please set role in [:common, :component]"
+      true -> :skip
+      false -> raise ArgumentError, "please set role in [:common, :component]"
     end
 
     sub_modules =
       case role do
-        :common -> @common_modules
-        :component -> [WeChat.SDK.Component | @common_modules]
+        :common ->
+          case app_type do
+            :official_account -> @common_modules
+            :mini_program -> [WeChat.SDK.MiniProgram]
+          end
+
+        :component ->
+          case app_type do
+            :official_account -> [WeChat.SDK.Component | @common_modules]
+            :mini_program -> [WeChat.SDK.Component, WeChat.SDK.MiniProgram]
+          end
       end
 
     {sub_module_ast_list, files} =

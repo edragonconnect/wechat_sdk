@@ -46,6 +46,24 @@ defmodule WeChat.SDK.Component do
   end
 
   @doc """
+  小程序登录
+
+  API Docs:
+    * [link](#{SDK.doc_link_prefix()}/oplatform/Third-party_Platforms/Mini_Programs/WeChat_login.html){:target="_blank"}
+  """
+  @spec code2session(SDK.client(), code :: String.t()) :: SDK.response()
+  def code2session(client, code) do
+    client.request(
+      :get,
+      url: "/sns/component/jscode2session",
+      query: [
+        grant_type: "authorization_code",
+        js_code: code
+      ]
+    )
+  end
+
+  @doc """
   接口调用次数清零
 
   ## API Docs
