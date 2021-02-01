@@ -242,4 +242,19 @@ defmodule WeChat.SDK do
   end
 
   def doc_link_prefix, do: "https://developers.weixin.qq.com/doc"
+
+  @spec build_client(client, options :: map) :: {:ok, client}
+  def build_client(module_name, options) do
+    with {:module, module, _binary, _term} <-
+           Module.create(
+             module_name,
+             quote do
+               @moduledoc "#{unquote(module_name)}"
+               use WeChat.SDK, unquote(options)
+             end,
+             Macro.Env.location(__ENV__)
+           ) do
+      {:ok, module}
+    end
+  end
 end
