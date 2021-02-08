@@ -24,7 +24,7 @@ defmodule WeChat.SDK.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:elixir_wechat, "~> 0.3"},
+      {:elixir_wechat, "~> 0.4"},
       {:ex_doc, "~> 0.22", only: [:docs, :dev], runtime: false}
     ]
   end
