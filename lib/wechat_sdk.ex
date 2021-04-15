@@ -23,7 +23,8 @@ defmodule WeChat.SDK do
     WeChat.SDK.UserBlacklist,
     WeChat.SDK.Account,
     WeChat.SDK.Comment,
-    WeChat.SDK.JS
+    WeChat.SDK.JS,
+    WeChat.SDK.SubscribeMessage
   ]
 
   defmacro __using__(opts \\ []) do
