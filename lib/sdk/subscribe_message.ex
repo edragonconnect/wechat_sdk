@@ -176,7 +176,7 @@ defmodule WeChat.SDK.SubscribeMessage do
   @spec send(SDK.client(), SDK.openid(), template_id, send_data, send_options) ::
           SDK.response()
   def send(client, openid, template_id, data, options \\ %{}) do
-    data = Enum.into(data, fn {k, v} -> %{k => %{value: v}} end)
+    data = Enum.into(data, %{}, fn {k, v} -> {k, %{value: v}} end)
 
     client.request(:post,
       url: "/cgi-bin/message/subscribe/send",
