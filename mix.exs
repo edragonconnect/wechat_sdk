@@ -25,7 +25,7 @@ defmodule WeChat.SDK.MixProject do
   defp deps do
     [
       {:elixir_wechat, "~> 0.4"},
-      {:ex_doc, "~> 0.22", only: [:docs, :dev], runtime: false}
+      {:ex_doc, ">= 0.0.0", only: [:docs, :dev], runtime: false}
     ]
   end
 
