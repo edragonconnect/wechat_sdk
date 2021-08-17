@@ -66,21 +66,18 @@ defmodule WeChat.SDK do
       |> Macro.prewalk(&Macro.expand(&1, __CALLER__))
       |> Keyword.take([:adapter_storage, :appid, :authorizer_appid, :scenario])
 
-    [gen_request(role, default_opts) | files] ++ sub_module_ast_list
+    [gen_request(role, app_type, default_opts) | files] ++ sub_module_ast_list
   end
 
-  def gen_request(role, default_opts) do
+  defp gen_request(role, app_type, default_opts) do
     request_function =
       Enum.join([role, "request"], "_")
       |> String.to_atom()
 
     appid =
       case role do
-        :common ->
-          Keyword.get(default_opts, :appid)
-
-        :component ->
-          Keyword.get(default_opts, :authorizer_appid)
+        :common -> Keyword.get(default_opts, :appid)
+        :component -> Keyword.get(default_opts, :authorizer_appid)
       end
 
     quote do
@@ -88,6 +85,7 @@ defmodule WeChat.SDK do
 
       def default_opts, do: unquote(default_opts)
       def appid, do: unquote(appid)
+      def app_type, do: unquote(app_type)
 
       @doc """
       See WeChat.request/2 for more information.
