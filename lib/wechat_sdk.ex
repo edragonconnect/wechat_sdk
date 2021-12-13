@@ -11,6 +11,8 @@ defmodule WeChat.SDK do
 
   @common_modules [
     WeChat.SDK.Material,
+    WeChat.SDK.DraftBox,
+    WeChat.SDK.Publish,
     WeChat.SDK.Card,
     WeChat.SDK.CardManaging,
     WeChat.SDK.CardDistributing,

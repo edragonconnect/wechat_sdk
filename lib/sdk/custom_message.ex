@@ -223,6 +223,20 @@ defmodule WeChat.SDK.CustomMessage do
   end
 
   @doc """
+  客服消息接口 - 发送图文消息 by ArticleID (点击跳转到图文消息页面) -
+  [官方文档](#{@doc_link}#7){:target="_blank"}
+
+  使用通过 “发布” 系列接口得到的 article_id
+  """
+  @spec send_article(SDK.client(), SDK.openid(), Publish.article_id()) :: SDK.response()
+  def send_article(client, openid, article_id) do
+    send_msg(
+      client,
+      json_map(touser: openid, msgtype: "mpnewsarticle", mpnewsarticle: %{article_id: article_id})
+    )
+  end
+
+  @doc """
   客服消息接口-发送菜单消息
 
   ## Example
