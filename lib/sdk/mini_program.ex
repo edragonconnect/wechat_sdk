@@ -53,10 +53,10 @@ defmodule WeChat.SDK.MiniProgram do
   API Docs:
     * [link](#{@doc_link}/api/open-api/login/wx.login.html){:target="_blank"}
   """
-  @spec code2session(SDK.client(), code :: String.t()) :: SDK.response()
-  def code2session(client, code) do
+  @spec code2session(SDK.client(), code :: String.t(), secret_key :: String.t()) :: SDK.response()
+  def code2session(client, code, secret_key \\ nil) do
     appid = client.appid()
-    secret_key = Keyword.fetch!(client.default_opts(), :secret_key)
+    secret_key = secret_key || Keyword.fetch!(client.default_opts(), :secret_key)
 
     client.request(
       :get,

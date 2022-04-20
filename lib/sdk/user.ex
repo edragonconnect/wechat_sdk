@@ -84,10 +84,10 @@ defmodule WeChat.SDK.User do
   ## API Docs
     [link](#{SDK.doc_link_prefix()}/offiaccount/OA_Web_Apps/Wechat_webpage_authorization.html#1)
   """
-  @spec code2access_token(SDK.client, code :: String.t()) :: SDK.response()
-  def code2access_token(client, code) do
+  @spec code2access_token(SDK.client, code :: String.t(), secret_key :: String.t()) :: SDK.response()
+  def code2access_token(client, code, secret_key \\ nil) do
     appid = client.appid()
-    secret_key = Keyword.fetch!(client.default_opts(), :secret_key)
+    secret_key = secret_key || Keyword.fetch!(client.default_opts(), :secret_key)
 
     client.request(
       :get,
