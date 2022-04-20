@@ -56,14 +56,14 @@ defmodule WeChat.SDK.MiniProgram do
   @spec code2session(SDK.client(), code :: String.t()) :: SDK.response()
   def code2session(client, code) do
     appid = client.appid()
-    {adapter_storage, args} = Keyword.fetch!(client.default_opts(), :adapter_storage)
+    secret_key = Keyword.fetch!(client.default_opts(), :secret_key)
 
     client.request(
       :get,
       url: "/sns/jscode2session",
       query: [
         appid: appid,
-        secret: adapter_storage.secret_key(appid, args),
+        secret: secret_key,
         grant_type: "authorization_code",
         js_code: code
       ]
